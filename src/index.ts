@@ -1,132 +1,113 @@
 import { IIntent } from './interface/IIntent';
 import { Graph } from './graph';
+import { Config } from './config/config';
 
 const dialogflow = require('dialogflow');
 const express = require('express')
 const app = express()
-const stringUtils = require('./Utils/StringUtils');
+const stringUtils = require('./utils/StringUtils');
+let config: Config = require('./config/config.json');
+
 var intentIndex = new Map<string, number>();
+var newMap = new Map<string, [number, string]>();
 var intentStr : string = ''; 
 var edgeStr : string = ''; 
 
-app.get('/', (req, res) =>  renderHtml(res));
-app.get('/matchintent', (req, res) => runSample('x-petch', res).then(() => console.log('Successssss')).catch(() => console.log('obligatory catch')));
+
+
+app.get('/', (req, res) =>  runSample(config.projectId,res));
+// app.get('/', (req, res) =>  runSample('x-petch', res).then(() => console.log('Successs')));
+app.get('/matchintent', (req, res) => runSample(config.projectId, res).then(() => console.log('Successssss')).catch(() => console.log('obligatory catch')));
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
 
-function renderHtml(res){
-    res.set('Content-Type', 'text/html');
-    runSample('x-petch', res)
-    .then(() => {     
-        console.log('print Success')
-    })
-    .catch(() => console.log('obligatory catch'));
-}
+
 
 async function runSample(projectId = 'your-project-id', res) {  
-    listIntents('x-petch').then(() => {
-        console.log('listIntents Success')
-        console.log(intentStr)
-        var htmlText = buildHtml();        
+    res.set('Content-Type', 'text/html');    
+    listIntents(projectId).then((response) => {
+        console.log('########');
+        var htmlText = buildHtml();  
+        // console.log(htmlText)      
         res.send(new Buffer(htmlText));   
     }
     ).catch(() => console.log('obligatory catch'))
 }
 
-async function listIntents(projectId){
-  const intentsClient = new dialogflow.IntentsClient();  
+
+
+
+
+async function listIntents(projectId): Promise<any>{
+
+//   var key_file_path = "/Users/pongpanut/Documents/10x/scb10x1-chatbot-uat-7d622363e531.json";
+  const intentsClient = new dialogflow.IntentsClient({
+    // keyFilename: key_file_path
+  });  
   const projectAgentPath = intentsClient.projectAgentPath(projectId);
 
   const request = {
     parent: projectAgentPath,
+    // languageCode: 'en'
   };
-   
-//   let responses 
+    
   try {
-    let responses = await intentsClient.listIntents(request);   
-    
+      console.log('test');
+    let responses = await intentsClient.listIntents(request);
+    console.log('######');   
+    // console.log(responses);
+    console.log('######'); 
     if(responses){
-        const responseData =  responses[0];
-        // let intentList: IIntent[] = [];
-        let graph = new Graph(responseData.length);
+        const intents =  responses[0];
+
+        let graph = new Graph(intents.length);
         var index:number = 1; 
+        let intentList: IIntent[] = [];
 
-        responseData.forEach(function (data) {
+
+        intents.forEach(function (data) {
+       
             intentIndex.set(data.displayName, index)
+            newMap.set(data.displayName, [index, data.name])
             graph.addVertex(index);
-            if(data.displayName,data.outputContexts[0]){
-                let outputName = data.outputContexts[0].name
-                var outputIntent = responseData.filter(x => x.inputContextNames[0] == outputName)
-                var i:number = 0; 
-                if(outputIntent){
-                    for(i = 0; i < outputIntent.length;i++) {
-                        graph.addEdge(index, intentIndex.get(outputIntent[i].displayName))
-                    }
-                }
-            }
-            index++;
+
             
-            // intentList.push({
-            //     inputContextNames: data.inputContextNames[0] ? 
-            //       stringUtils.extractIntentName(data.inputContextNames[0]) : '',
-            //     outputContexts: data.outputContexts[0] ?
-            //       stringUtils.extractIntentName(data.outputContexts[0].name) : '',
-            //     intentName: data.displayName
-            // });          
-        }); 
+            
+            if(data.outputContexts && data.outputContexts.length){
+                data.outputContexts.forEach(function(temp){
+                    var outputIntent = intents.filter(x => x.inputContextNames[0] == temp.name)
+                    var i:number = 0; 
+                    if(outputIntent){
+                        for(i = 0; i < outputIntent.length;i++) {
+                            graph.addEdge(index, intentIndex.get(outputIntent[i].displayName))
+                        }
+                    }
+                });
+            }
 
-        // const getKeyByValue = (obj, value) => Object.keys(obj).find(key => obj[key] === value);
-        // console.log(getIntentNameFromIndex(intentIndex, '1'))
-        
+            intentList.push({
+                inputContextNames: data.inputContextNames[0] ? 
+                  stringUtils.extractIntentName(data.inputContextNames[0]) : '',
+                outputContexts: data.outputContexts[0] ?
+                  stringUtils.extractIntentName(data.outputContexts[0].name) : '',
+                intentName: data.displayName
+            });          
 
-        // var rootNode =  intentList.filter(x => x.inputContextNames == '');
-    
-        // console.log(intentList);
-        // console.log('responses' + JSON.stringify(intentList));
-        // console.log(intentList);
+            index++;
         
-        // generateVertical(graph);
+        });
+        console.log(intentList.find(x => x.intentName == 'YourLoan.Income.NotANumber'));
+
         graph.printGraph();
         edgeStr = graph.getEdge();
-        intentStr = graph.getNode(intentIndex);
+        intentStr = graph.getVertices(intentIndex);  
 
-        
 
-        // console.log('################### Full version response #######');
-        // console.log(responseData);
-        // console.error('Data count'+ responses[0].length);   
+        return [intentStr, edgeStr] 
     }
   } catch (err) {
     console.error('ERROR:', err);
   }  
 }
-
-// function getByValue(map, searchValue) {
-//     for (let [key, value] of map.entries()) {
-//       if (value === searchValue)
-//         return key;
-//     }
-// }
-
-// function generateVertical(graph){
-//     var numOfNode = graph.noOfVertices;
-//     var i:number = 0;     
-//     // var graphObj = graph.AdjList;
-//     for(i = 1 ;i <= numOfNode ;i++) {
-//         let name = getByValue(intentIndex, i);
-//         intentStr += '{id:' + i + ', label:"'+ name + '", title: "Tooltip for' + name +'"}';
-//         if( i < numOfNode){
-//             intentStr += ',' 
-//         }
-//     }   
-
-//     return intentStr;
-// }
-
-// function generateEdge(graph){
-
-// }
-
-
 
 
 function buildHtml(){
@@ -171,8 +152,8 @@ function buildStylesheet(){
     + '   font-family: sans-serif;'
     + '  }'
     + '  .container {'
-    + '   height: 300px;'
-    + '   width: 400px;'
+    + '   height: 800px;'
+    + '   width: 900px;'
     + '   border: solid 1px #000'
     + '  }'
     + '</style>'
