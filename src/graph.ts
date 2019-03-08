@@ -37,6 +37,7 @@ export class Graph {
     
     getEdge(intentDict) 
     { 
+        console.log(intentDict)
         var get_keys = this.AdjList.keys(); 
         var edgeText : string = ''; 
         for (var i of get_keys)  { 
@@ -44,7 +45,7 @@ export class Graph {
             if(get_values != ""){
                 for (var j of get_values) {
                     var intent = intentDict.find(x => x.id == i);    
-                    edgeText += '{from:' + i + ', to: '+  j + 'title: "'+intent.outputContexts+'"},';
+                    edgeText += '{from:' + i + ', to: '+  j + ', title: "'+intent.outputContexts+'"},';
                 }
                 
             }
@@ -61,9 +62,7 @@ export class Graph {
         for(i = 1 ;i <= numOfNode ;i++) {
             var intentTemp = intentDict.find(x => x.id == i);
             if(intentTemp.inputContextNames != "" || intentTemp.outputContexts != ""){
-                //intentTemp.intentName
-                var name = ''
-                intentStr += '{id:' + i + ', label:"'+ name + '", title: "Tooltip for ' + name +'"}';
+                intentStr += '{id:' + i + ', label:"'+ intentTemp.intentName + '", title: "Tooltip for ' + intentTemp.intentName +'"}';
                 if( i < numOfNode){
                     intentStr += ',' 
                 }

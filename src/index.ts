@@ -1,5 +1,4 @@
 import { IIntent } from './interface/IIntent';
-import { IIntent2 } from './interface/IIntent2';
 import { Graph } from './graph';
 import { Config } from './config/config';
 
@@ -22,83 +21,131 @@ app.get('/matchintent', (req, res) => runSample(config.projectId, res).then(() =
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
 
 
+// app.set('view engine', 'ejs');
+// app.get('/test2', (req, res) => {
+//   var string = "var nodes2 = new vis.DataSet(["
+//   + "{id: 11, label: 'Node 11', level:1 ,title: 'Tooltip for Node 11'},"
+//   + "{id: 12, label: 'Node 12', level:2 , title: 'Tooltip for Node 12'},"
+//   + '{id: 13, label: "Node 13", level:2 ,title: "Tooltip for Node 13"},'
+//   + '{id: 14, label: "Node 14", level:3 ,title: "Tooltip for Node 14"},'
+//   + '{id: 15, label: "Node 15", level:3 , title: "Tooltip for Node 15"}'
+//   + ']);'
+//   + 'var edges2 = new vis.DataSet(['
+//    + '{from: 11, to: 12,  title:"edge1"},'
+//    + '{from: 11, to: 13},'
+//    + '{from: 12, to: 14},'
+//    + '{from: 12, to: 15},'
+//    + ']);'
+//    +'var data = {'
+//     +'nodes: nodes2,'
+//     +' edges: edges2'
+//     +' };'
+
+//     +' var options ={};'
+//     +' var timeline = new vis.Network(container, data, options);'
+
+//   res.render("index", { myString: string }); 
+// }); 
+
+
+// app.get('/test',function  (req,res) {
+//      // res.send(JSON.stringify(result) );
+//      var string = '<script type="text/javascript">'
+//      + 'var nodes2 = new vis.DataSet(['
+//      + '{id: 11, label: "Node 11", level:1 ,title: "Tooltip for Node 11"},'
+//      + '{id: 12, label: "Node 12", level:2 , title: "Tooltip for Node 12"},'
+//      + '{id: 13, label: "Node 13", level:2 ,title: "Tooltip for Node 13"},'
+//      + '{id: 14, label: "Node 14", level:3 ,title: "Tooltip for Node 14"},'
+//      + '{id: 15, label: "Node 15", level:3 , title: "Tooltip for Node 15"}'
+//      + ']);'
+//      + 'var edges2 = new vis.DataSet(['
+//       + '{from: 11, to: 12,  title:"edge1"},'
+//       + '{from: 11, to: 13},'
+//       + '{from: 12, to: 14},'
+//       + '{from: 12, to: 15},'
+//       + ']);'
+//       + '</script>'
+
+//      res.render( "index",{ myString: string }, function(err, html) {
+//        console.log(html);
+//       //  res.send(html);
+//       });
+    
+// });
 
 async function runSample(projectId = 'your-project-id', res) {  
-    res.set('Content-Type', 'text/html');    
-    listIntents(projectId).then((response) => {
-        console.log('########');
-        var htmlText = buildHtml();  
-        // console.log(htmlText)      
-        res.send(new Buffer(htmlText));   
-    }
-    ).catch(() => console.log('obligatory catch'))
+    res.set('Content-Type', 'text/html'); 
+    getIntents(projectId).then((response) =>{
+      console.log(response);
+    })
+
+
+
+    // listIntents(projectId).then((response) => {
+    //     var htmlText = buildHtml();  
+    //     // console.log(htmlText)      
+    //     res.send(new Buffer(htmlText));   
+    // }
+    // ).catch(() => console.log('obligatory catch'))
 }
 
 
-async function listIntents(projectId): Promise<any>{
-
-//   const intentsClient = new dialogflow.IntentsClient();  
-  const intentsClient = new dialogflow.IntentsClient({
-    // keyFilename: key_file_path
-  });  
-
-  console.log(intentsClient)
-
+async function getIntents(projectId): Promise<any>{
+  const intentsClient = new dialogflow.IntentsClient();  
   const projectAgentPath = intentsClient.projectAgentPath(projectId);
 
   const request = {
     parent: projectAgentPath,
     intentView: 'INTENT_VIEW_FULL',
-    // languageCode: 'en'
+  };
+    
+  try {
+    var responses = await intentsClient.listIntents(request);
+  }
+  catch(err) {
+    console.error('ERROR:', err);
+  }
+  return responses
+}
+
+async function listIntents(projectId): Promise<any>{
+
+  const intentsClient = new dialogflow.IntentsClient();  
+  const projectAgentPath = intentsClient.projectAgentPath(projectId);
+
+  const request = {
+    parent: projectAgentPath,
+    intentView: 'INTENT_VIEW_FULL',
   };
     
   try {
     let responses = await intentsClient.listIntents(request);
     
-    console.log("response : "responses);
     if(responses){
         const intents =  responses[0];
         let graph = new Graph(intents.length);
-        var index:number = 1; 
-        var index2:number = 1; 
         let intentList: IIntent[] = [];
-        let intentList2: IIntent2[] = [];
 
-        intents.forEach(function (data) {
-            intentIndex.set(data.displayName, index2)
-            // newMap.set(data.displayName, [index2, data.name, data.outputContexts])
-            index2++;
+        intents.forEach(function (data, index) {
+            intentIndex.set(data.displayName, ++index)
         });
 
-        console.log('tesIndex');
-        console.log(intentIndex);
-
-        intents.forEach(function (data) {
-       
-            // intentIndex.set(data.displayName, index)
+        intents.forEach(function (data, index) {
+            index++;
             graph.addVertex(index);
-            
+          
             if(data.outputContexts && data.outputContexts.length){
-                data.outputContexts.forEach(function(temp){
-                    var outputIntent = intents.filter(x => x.inputContextNames[0] == temp.name)
-                    var i:number = 0; 
+                data.outputContexts.forEach(function(outputContexts){
+                    var outputIntent = intents.filter(x => x.inputContextNames[0] == outputContexts.name)
                     if(outputIntent){
-                        for(i = 0; i < outputIntent.length;i++) {
-                            graph.addEdge(index, intentIndex.get(outputIntent[i].displayName))
-                        }
+                        outputIntent.forEach(function (data) {
+                          graph.addEdge(index, intentIndex.get(data.displayName))
+                        });
                     }
                 });
-            }
-
-            intentList.push({
-                inputContextNames: data.inputContextNames[0] ? 
-                  stringUtils.extractIntentName(data.inputContextNames[0]) : '',
-                outputContexts: data.outputContexts[0] ?
-                  stringUtils.extractIntentName(data.outputContexts[0].name) : '',
-                intentName: data.displayName
-            });    
+            } 
             
-            intentList2.push({
+            intentList.push({
                 inputContextNames: data.inputContextNames[0] ? 
                   stringUtils.extractIntentName(data.inputContextNames[0]) : '',
                 outputContexts: data.outputContexts[0] ?
@@ -106,15 +153,11 @@ async function listIntents(projectId): Promise<any>{
                 intentName: data.displayName,
                 id:index
             });  
-
-            index++;
-        
         });
-  
 
-        graph.printGraph();
-        edgeStr = graph.getEdge(intentList2 );
-        intentStr = graph.getVertices(intentIndex, intentList2);  
+        // graph.printGraph();
+        edgeStr = graph.getEdge(intentList );
+        intentStr = graph.getVertices(intentIndex, intentList);  
 
 
         return [intentStr, edgeStr] 
@@ -123,6 +166,22 @@ async function listIntents(projectId): Promise<any>{
     console.error('ERROR:', err);
   }  
 }
+
+
+// async function createIntentList(index, data){
+//   let intentList: IIntent[] = [];
+
+//   intentList.push({
+//     inputContextNames: data.inputContextNames[0] ? 
+//       stringUtils.extractIntentName(data.inputContextNames[0]) : '',
+//     outputContexts: data.outputContexts[0] ?
+//       stringUtils.extractIntentName(data.outputContexts[0].name) : '',
+//     intentName: data.displayName,
+//     id:index
+//   });  
+
+//   return intentList;
+// }
 
 
 function buildHtml(){
