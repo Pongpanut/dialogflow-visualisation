@@ -35,7 +35,7 @@ export class Graph {
         } 
     }
     
-    getEdge() 
+    getEdge(intentDict) 
     { 
         var get_keys = this.AdjList.keys(); 
         var edgeText : string = ''; 
@@ -43,32 +43,32 @@ export class Graph {
             var get_values = this.AdjList.get(i); 
             if(get_values != ""){
                 for (var j of get_values) {
-                    edgeText += '{from:' + i + ', to: '+  j + '},';
+                    var intent = intentDict.find(x => x.id == i);    
+                    edgeText += '{from:' + i + ', to: '+  j + 'title: "'+intent.outputContexts+'"},';
                 }
+                
             }
         }
         return edgeText;
     }
 
-    getVertices(intentIndex) 
+    getVertices(intentIndex, intentDict) 
     { 
         var numOfNode = this.noOfVertices;
         var i: number = 0; 
-        var intentStr: string = '';     
+        var intentStr: string = ''; 
+        
         for(i = 1 ;i <= numOfNode ;i++) {
-            let name = this.getByValue(intentIndex, i);
-            intentStr += '{id:' + i + ', label:"'+ name + '", title: "Tooltip for ' + name +'"}';
-            if( i < numOfNode){
-                intentStr += ',' 
+            var intentTemp = intentDict.find(x => x.id == i);
+            if(intentTemp.inputContextNames != "" || intentTemp.outputContexts != ""){
+                //intentTemp.intentName
+                var name = ''
+                intentStr += '{id:' + i + ', label:"'+ name + '", title: "Tooltip for ' + name +'"}';
+                if( i < numOfNode){
+                    intentStr += ',' 
+                }
             }
         }   
         return intentStr;
-    }
-
-    private getByValue(map, searchValue) {
-        for (let [key, value] of map.entries()) {
-          if (value === searchValue)
-            return key;
-        }
     }
 } 

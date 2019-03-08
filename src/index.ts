@@ -1,4 +1,5 @@
 import { IIntent } from './interface/IIntent';
+import { IIntent2 } from './interface/IIntent2';
 import { Graph } from './graph';
 import { Config } from './config/config';
 
@@ -9,7 +10,7 @@ const stringUtils = require('./utils/StringUtils');
 let config: Config = require('./config/config.json');
 
 var intentIndex = new Map<string, number>();
-var newMap = new Map<string, [number, string]>();
+// var newMap = new Map<string, [number, string]>();
 var intentStr : string = ''; 
 var edgeStr : string = ''; 
 
@@ -34,43 +35,48 @@ async function runSample(projectId = 'your-project-id', res) {
 }
 
 
-
-
-
 async function listIntents(projectId): Promise<any>{
 
-//   var key_file_path = "/Users/pongpanut/Documents/10x/scb10x1-chatbot-uat-7d622363e531.json";
+//   const intentsClient = new dialogflow.IntentsClient();  
   const intentsClient = new dialogflow.IntentsClient({
     // keyFilename: key_file_path
   });  
+
+  console.log(intentsClient)
+
   const projectAgentPath = intentsClient.projectAgentPath(projectId);
 
   const request = {
     parent: projectAgentPath,
+    intentView: 'INTENT_VIEW_FULL',
     // languageCode: 'en'
   };
     
   try {
-      console.log('test');
     let responses = await intentsClient.listIntents(request);
-    console.log('######');   
-    // console.log(responses);
-    console.log('######'); 
+    
+    console.log("response : "responses);
     if(responses){
         const intents =  responses[0];
-
         let graph = new Graph(intents.length);
         var index:number = 1; 
+        var index2:number = 1; 
         let intentList: IIntent[] = [];
+        let intentList2: IIntent2[] = [];
 
+        intents.forEach(function (data) {
+            intentIndex.set(data.displayName, index2)
+            // newMap.set(data.displayName, [index2, data.name, data.outputContexts])
+            index2++;
+        });
+
+        console.log('tesIndex');
+        console.log(intentIndex);
 
         intents.forEach(function (data) {
        
-            intentIndex.set(data.displayName, index)
-            newMap.set(data.displayName, [index, data.name])
+            // intentIndex.set(data.displayName, index)
             graph.addVertex(index);
-
-            
             
             if(data.outputContexts && data.outputContexts.length){
                 data.outputContexts.forEach(function(temp){
@@ -90,16 +96,25 @@ async function listIntents(projectId): Promise<any>{
                 outputContexts: data.outputContexts[0] ?
                   stringUtils.extractIntentName(data.outputContexts[0].name) : '',
                 intentName: data.displayName
-            });          
+            });    
+            
+            intentList2.push({
+                inputContextNames: data.inputContextNames[0] ? 
+                  stringUtils.extractIntentName(data.inputContextNames[0]) : '',
+                outputContexts: data.outputContexts[0] ?
+                  stringUtils.extractIntentName(data.outputContexts[0].name) : '',
+                intentName: data.displayName,
+                id:index
+            });  
 
             index++;
         
         });
-        console.log(intentList.find(x => x.intentName == 'YourLoan.Income.NotANumber'));
+  
 
         graph.printGraph();
-        edgeStr = graph.getEdge();
-        intentStr = graph.getVertices(intentIndex);  
+        edgeStr = graph.getEdge(intentList2 );
+        intentStr = graph.getVertices(intentIndex, intentList2);  
 
 
         return [intentStr, edgeStr] 
@@ -161,6 +176,30 @@ function buildStylesheet(){
 
 function buildVisOption(){
     return 'var options = {'
+     + ' physics:{'
+     +   'barnesHut: {'
+     +   'avoidOverlap: 1'
+     +   '},'
+     +   'hierarchicalRepulsion: {'
+    +   '   centralGravity: 0.0,'
+    +   '    springLength: 300,'
+    +   '    springConstant: 0.01,'
+    +   '    nodeDistance: 120,'
+    +   '   damping: 0.09'
+    +   ' },'
+     +   'maxVelocity: 50,'
+     +   'minVelocity: 0.1,'
+     +   'solver: "hierarchicalRepulsion",'
+     +   'stabilization: {'
+     +   '  enabled: true,'
+     +   '  iterations: 1000,'
+     +   '  updateInterval: 100,'
+     +   '  onlyDynamicEdges: false,'
+     +   '  fit: true'
+     +   '},'
+     +   'timestep: 0.5,'
+     +   'enabled: true'
+     + '},'
      + 'nodes:{'
      + 'shape: "box",'
      + '},'
@@ -173,13 +212,13 @@ function buildVisOption(){
      + 'hoverConnectedEdges: false,'
      + 'keyboard: {'
      + 'enabled: false,'
-     + 'speed: {x: 10, y: 10, zoom: 0.02},'
+     + 'speed: {x: 0.1, y: 0.1, zoom: 0.02},'
      + 'bindToWindow: true'
      + '},'
      + 'multiselect: false,'
      + 'navigationButtons: false,'
      + 'selectable: true,'
-     + 'selectConnectedEdges: false,'
+     + 'selectConnectedEdges: true,'
      + 'tooltipDelay: 300,'
      + 'zoomView: true'
      + '},'
@@ -190,21 +229,21 @@ function buildVisOption(){
      + 'middle: {enabled: false, scaleFactor:1, type:"arrow"},'
      + 'from:   {enabled: false, scaleFactor:1, type:"arrow"}'
      + '},'
-    //  + '},'
-    //  + 'layout: {'
-    //  + 'randomSeed: undefined,'
-    //  + 'improvedLayout:true,'
-    //  + 'hierarchical: {'
-    //  + 'enabled:true,'
-    //  + 'levelSeparation: 150,'
-    //  + 'nodeSpacing: 100,'
-    //  + 'treeSpacing: 200,'
-    //  + 'blockShifting: true,'
-    //  + 'edgeMinimization: true,'
-    //  + 'parentCentralization: true,'
-    //  + 'direction: "UD",'
-    //  + 'sortMethod: "hubsize"'
-    //  + '}'
+     + '},'
+     + 'layout: {'
+     + 'randomSeed: undefined,'
+     + 'improvedLayout:false,'
+     + 'hierarchical: {'
+     + 'enabled:true,'
+     + 'levelSeparation: 150,'
+     + 'nodeSpacing: 300,'
+     + 'treeSpacing: 300,'
+     + 'blockShifting: true,'
+     + 'edgeMinimization: true,'
+     + 'parentCentralization: true,'
+     + 'direction: "UD",'
+     + 'sortMethod: "hubsize"'
+     + '}'
      + '}'
      + '};'
 }
