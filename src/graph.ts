@@ -1,3 +1,5 @@
+const stringUtils = require('./utils/StringUtils');
+
 export class Graph { 
     public noOfVertices: number;
     public AdjList;
@@ -34,40 +36,41 @@ export class Graph {
             console.log(i + " -> " + conc); 
         } 
     }
+
+    async createEdgeString(data, intents, intentIndex): Promise<string>{
+        let edgeString = '';
     
-    getEdge(intentDict) 
-    { 
-        console.log(intentDict)
-        var get_keys = this.AdjList.keys(); 
-        var edgeText : string = ''; 
-        for (var i of get_keys)  { 
-            var get_values = this.AdjList.get(i); 
-            if(get_values != ""){
-                for (var j of get_values) {
-                    var intent = intentDict.find(x => x.id == i);    
-                    edgeText += '{from:' + i + ', to: '+  j + ', title: "'+intent.outputContexts+'"},';
+        data.forEach(function(dataObj){
+          dataObj.outputContext.forEach(function(outputContext){
+              var outputIntent = intents.filter(x => x.inputContextNames[0] == outputContext.name)
+              if(outputIntent){
+                    outputIntent.forEach(function (data) {
+                         edgeString += '{from:' + dataObj.index + ', to: '+  intentIndex.get(data.displayName) + ', title: "'+stringUtils.extractIntentName(outputContext.name)+'"},';
+                    });
                 }
-                
-            }
-        }
-        return edgeText;
+            });
+        });
+        return edgeString
     }
 
-    getVertices(intentIndex, intentDict) 
-    { 
+    async createVerticesString(intentIndex, intentDict) : Promise<any>{ 
         var numOfNode = this.noOfVertices;
         var i: number = 0; 
         var intentStr: string = ''; 
+        var idvIntentStr: string = ''; 
         
         for(i = 1 ;i <= numOfNode ;i++) {
-            var intentTemp = intentDict.find(x => x.id == i);
-            if(intentTemp.inputContextNames != "" || intentTemp.outputContexts != ""){
-                intentStr += '{id:' + i + ', label:"'+ intentTemp.intentName + '", title: "Tooltip for ' + intentTemp.intentName +'"}';
-                if( i < numOfNode){
-                    intentStr += ',' 
-                }
+            var intent = intentDict.find(x => x.id == i);
+            if(intent.inputContextNames != "" || intent.outputContexts != ""){
+                intentStr += '{id:' + i + ', label:"'+ intent.intentName + '", title: "Tooltip for ' + intent.intentName +'"},';
+            }
+            else {
+                idvIntentStr += '{id:' + i + ', label:"'+ intent.intentName + '", title: "Tooltip for ' + intent.intentName +'"},'; 
             }
         }   
-        return intentStr;
+        return {
+            intentStr: intentStr,
+            idvIntentStr: idvIntentStr
+        };
     }
 } 

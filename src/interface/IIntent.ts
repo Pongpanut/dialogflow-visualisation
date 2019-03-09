@@ -1,4 +1,4 @@
-export interface IIntent2 {
+export interface IIntent {
     inputContextNames: string;
     outputContexts: string;
     intentName: string;

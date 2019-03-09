@@ -5,26 +5,187 @@
     <title>Timeline basic demo</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style type="text/css">
-       body, html {
-          font-family: sans-serif;
+         body, html {
+           font-family: sans-serif;
          }
          .container {
-          height: 800px,
-          width: 900px,
-          border: solid 1px #000
-         }
-       </style>
+           height: 800px;
+           width: 900px;
+        }
+         .tab-content{
+         border: solid 1px #000
+        }
+        .pad{
+            padding: 40px;
+        }
+        .header{
+           color: #8b3085;
+        }
+      </style>
     </head>
  <body>   
+    <div class="container pad">
+    <h6 class="section-title h1 header" align="center">
+        <%= projectId %>
+    </h6>
+    <div class="row">
+    <div class="col-xs-12 ">
+        <nav>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Intent</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Individual intent</a>
+            </div>
+        </nav>
+     <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+           <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+           <div id="mynetwork" class="container"></div>
+           </div>
+           <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">     
+           <div id="mynetwork2" class="container"></div>
+           </div>
+           </div>   
+           </div>
+           </div>  
+           </div>
+           <script type="text/javascript">
+           var container = document.getElementById("mynetwork");
+           var container2 = document.getElementById("mynetwork2");
+           var nodes = new vis.DataSet([
+             <%- JSON.parse(nodes)%>
+           ]);
+           var nodes2 = new vis.DataSet([
+           <%- JSON.parse(nodes2)%>
+          ]);
+          var edges = new vis.DataSet([
+            <%- JSON.parse(edge)%>
+          ]);
+          var data = {
+          nodes: nodes,
+          edges: edges
+          };
+
+          var data2 = {
+          nodes: nodes,
+          };
+
+          var options = {
+          autoResize: true,
+          physics:{
+            barnesHut: {
+            avoidOverlap: 1
+          },
+          hierarchicalRepulsion: {
+              centralGravity: 0.0,
+              springLength: 300,
+              springConstant: 0.01,
+              nodeDistance: 120,
+              damping: 0.09
+          },
+          maxVelocity: 50,
+          minVelocity: 0.1,
+          solver: "hierarchicalRepulsion",
+          stabilization: {
+            enabled: true,
+            iterations: 1000,
+            updateInterval: 100,
+            onlyDynamicEdges: false,
+            fit: true
+          },
+          timestep: 0.5,
+          enabled: true
+          },
+          nodes:{
+            shape: "box",
+          },
+          interaction:{
+            dragNodes:true,
+            dragView: true,
+            hideEdgesOnDrag: false,
+            hideNodesOnDrag: false,
+            hover: true,
+            hoverConnectedEdges: false,
+            keyboard: {
+              enabled: false,
+              speed: {x: 0.1, y: 0.1, zoom: 0.02},
+              bindToWindow: true
+            },
+            multiselect: false,
+            navigationButtons: true,
+            selectable: true,
+            selectConnectedEdges: true,
+            tooltipDelay: 300,
+            zoomView: true
+          },
+          edges:{
+            color: "red",
+            arrows: {
+              to:     {enabled: true, scaleFactor:1, type:"arrow"},
+              middle: {enabled: false, scaleFactor:1, type:"arrow"},
+              from:   {enabled: false, scaleFactor:1, type:"arrow"}
+            },
+          },
+          layout: {
+            randomSeed: undefined,
+            improvedLayout:false,
+            hierarchical: {
+              enabled:true,
+              levelSeparation: 150,
+              nodeSpacing: 300,
+              treeSpacing: 300,
+              blockShifting: true,
+              edgeMinimization: true,
+              parentCentralization: true,
+              direction: "UD",
+              sortMethod: "hubsize"
+            }
+          }
+          };
+
+          var options2 = {
+           autoResize: true,
+          nodes:{
+          shape: "box",
+          },
+          interaction:{
+          dragNodes:true,
+          dragView: true,
+          hideEdgesOnDrag: false,
+          hideNodesOnDrag: false,
+          hover: true,
+          hoverConnectedEdges: false,
+          keyboard: {
+          enabled: false,
+          speed: {x: 0.1, y: 0.1, zoom: 0.02},
+          bindToWindow: true
+          },
+          multiselect: false,
+          navigationButtons: true,
+          selectable: true,
+          selectConnectedEdges: true,
+          tooltipDelay: 300,
+          zoomView: true
+          },
+          };
+
+          var timeline = new vis.Network(container, data, options);
+          var timeline2 = new vis.Network(container2, data2, options2);
+          </script>
+          </body>
+          </html>
+
+
     <div id="mynetwork" class="container"></div>
     <script type="text/javascript">
          var container = document.getElementById("mynetwork");
     </script>
-    <script type="text/javascript">
-       <%=myString%>
-    </script>
-   
+    <script type="text/javascript">  
+   </script>
  </body>
 </html>
 
