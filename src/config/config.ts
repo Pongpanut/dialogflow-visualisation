@@ -1,4 +1,4 @@
 export interface Config
 {
-    projectId: string;   
+  projectId: string;
 }
