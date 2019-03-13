@@ -41,8 +41,8 @@ describe('MessageBuilder', function() {
 
   describe('getEdgeString', function() {
     it('should return edge string properly', async () => {
-      const intentJson = require('../mockData/builder/getEdgeString/intent1.json');
-      const outputJson = require('../mockData/builder/getEdgeString/output1.json');
+      const intentJson = require('../mockData/builder/messageBuilder/getEdgeString/intent1.json');
+      const outputJson = require('../mockData/builder/messageBuilder/getEdgeString/output1.json');
       const intent = intentJson;
       const output = outputJson;
       const intentIndex = new Map<string, number>();
@@ -63,7 +63,7 @@ describe('MessageBuilder', function() {
 
   describe('getVerticesString', function() {
     it('should return vertices string properly with fully relations', async () => {
-      const intentDictJson = require('../mockData/builder/getVerticesString/intentDict.json');
+      const intentDictJson = require('../mockData/builder/messageBuilder/getVerticesString/intentDict.json');
       
       const intentIndex = new Map<string, number>();
       intentIndex.set('intent1', 1);
@@ -77,7 +77,7 @@ describe('MessageBuilder', function() {
     })
 
     it('should return vertices string properly with empty idvIntentStr', async () => {
-      const intentDictJson = require('../mockData/builder/getVerticesString/intentDict_empty_idvIntent.json');
+      const intentDictJson = require('../mockData/builder/messageBuilder/getVerticesString/intentDict_empty_idvIntent.json');
       
       const intentIndex = new Map<string, number>();
       intentIndex.set('intent1', 1);
@@ -91,7 +91,7 @@ describe('MessageBuilder', function() {
     })
 
     it('should return vertices string properly with partial intent', async () => {
-      const intentDictJson = require('../mockData/builder/getVerticesString/intentDict_partial.json');
+      const intentDictJson = require('../mockData/builder/messageBuilder/getVerticesString/intentDict_partial.json');
       
       const intentIndex = new Map<string, number>();
       intentIndex.set('intent1', 1);
