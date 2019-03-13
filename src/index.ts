@@ -1,7 +1,7 @@
 import { IIntent } from './interface/IIntent';
 import { IOutputContext } from './interface/IOutputContext';
 import { Config } from './config/config';
-import { MessageBuilder } from './messageBuilder';
+import { MessageBuilder } from './builder/messageBuilder';
 
 const dialogflow = require('dialogflow');
 const express = require('express');

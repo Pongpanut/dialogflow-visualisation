@@ -1,6 +1,6 @@
-const stringUtils = require('./utils/StringUtils');
-import { Color } from './enum/color';
-import { EdgeColor } from './enum/edgeColor';
+const stringUtils = require('../utils/StringUtils');
+import { Color } from '../enum/color';
+import { EdgeColor } from '../enum/edgeColor';
 
 export class MessageBuilder {
   constructor() {
@@ -18,10 +18,7 @@ export class MessageBuilder {
             edgeString += `{from:'${dataObj.index}'
             ,color:{color:\' ${Color[EdgeColor[index]]}\'},
             to: ${intentIndex.get(output.displayName)},
-            title: " ${stringUtils.extractIntentName(outputContext.name)}
-            </br> <p style =\'color:red\'>
-            lifespanCount: <b> ${outputContext.lifespanCount}
-            </b></p>"},`;
+            title: '${stringUtils.extractIntentName(outputContext.name)} </br> <p style =\"color:red\">lifespanCount: <b> ${outputContext.lifespanCount} </b></p>'},`;
           });
         }
       });
@@ -41,11 +38,11 @@ export class MessageBuilder {
       color = this.getVerticeColor(intent.webhookState, intent.isFallback);
       if (intent.inputContextNames !== '' || intent.outputContexts !== '') {
         intentStr += `{id: ${i} , label: "${intent.intentName}",
-        font: {color: \'' + color + '\'},
+        font: {color: '${color}'},
         title: "${this.buildVerticesTooltip(intent)}"},`;
       } else {
         idvIntentStr += `{id: ${i} , label:" ${intent.intentName}",
-        font: {color: \'' + color + '\'},
+        font: {color: '${color}'},
         title: "${this.buildVerticesTooltip(intent)}"},`;
       }
     }
@@ -59,11 +56,12 @@ export class MessageBuilder {
     let trainingPhrasesTxt = '';
 
     if (trainingPhrases && trainingPhrases.length) {
-      for (const { phraseTxt, pos } of trainingPhrases
-        .map((phrase, index) => ({ phraseTxt, pos }))) {
-        if (pos === 3) break;
-        trainingPhrasesTxt += phraseTxt.parts[0].text;
-        if ((pos < trainingPhrases.length - 1) && pos < 2) {
+      for (const { phrase, index } of trainingPhrases
+        .map((phrase, index) => ({ phrase, index }))) {
+        console.log(phrase)
+        if (index === 3) break;
+        trainingPhrasesTxt += phrase.parts[0].text;
+        if ((index < trainingPhrases.length - 1) && index < 2) {
           trainingPhrasesTxt += ',';
         }
       }
