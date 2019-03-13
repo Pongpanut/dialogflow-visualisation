@@ -1,0 +1,23 @@
+[
+  { 
+    "inputContextNames": "in-context1",
+    "outputContexts": "out-context1",
+    "trainingPhrase": "",
+    "intentName": "intent1",
+    "id": 1,
+    "payloadCount": 1,
+    "responseMsg": "",
+    "webhookState": "WEBHOOK_STATE_ENABLED",
+    "isFallback": true 
+  },
+  { "inputContextNames": "in-context2",
+    "outputContexts": "out-context2",
+    "trainingPhrase": "โอเค,สนใจจ้า,ถูกต้องแล้ว",
+    "intentName": "intent2",
+    "id": 10,
+    "payloadCount": 1,
+    "responseMsg": "ได้เลยค่ะ น้องบอทขอเสนอเป็น 'สินเชื่อปรับได้ตามใจคุณ' ค่ะ 😊",
+    "webhookState": "WEBHOOK_STATE_UNSPECIFIED",
+    "isFallback": false 
+  }
+]

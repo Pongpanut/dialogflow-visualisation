@@ -1,14 +1,13 @@
 import { IIntent } from './interface/IIntent';
 import { IOutputContext } from './interface/IOutputContext';
 import { Config } from './config/config';
-import MessageBuilder from './builder/messageBuilder';
 
+const message = require('./builder/messageBuilder');
 const dialogflow = require('dialogflow');
 const express = require('express');
 const app = express();
 const stringUtils = require('./utils/StringUtils');
 const config: Config = require('./config/config.json');
-const message = new MessageBuilder();
 
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => runSample(config.projectId, res));

@@ -1,0 +1,16 @@
+[
+  { 
+    "outputContext":
+    [ { "name": "output1",
+        "lifespanCount": 3,
+        "parameters": null } ],
+    "index": 1
+  },
+  { 
+    "outputContext":
+    [ { "name": "output2",
+        "lifespanCount": 4,
+        "parameters": null } ],
+    "index": 2
+  }
+]

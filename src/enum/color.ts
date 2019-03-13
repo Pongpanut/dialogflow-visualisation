@@ -14,7 +14,7 @@ export enum Color {
   FUCHSIA	= '#FF00FF',
   PURPLE = '#800080',
   CYAN = '#69b3a2',
-  STEELBLUE = '0000ff',
-  PINK = 'c62dcd',
+  STEELBLUE = '#0000ff',
+  PINK = '#c62dcd',
   SKY = '#0cf0e9'
 }
