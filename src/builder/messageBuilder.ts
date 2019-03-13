@@ -72,7 +72,6 @@ function getTrainingPhrases(trainingPhrases) : string {
     
     messages.forEach((messageObj) => {
       if (messageObj.message === 'text' && messageObj.text) {
-        
         const response = messageObj.text.text;
         if (response.length > 1) {
           responseTxt = response[Math.floor(Math.random() * response.length)];

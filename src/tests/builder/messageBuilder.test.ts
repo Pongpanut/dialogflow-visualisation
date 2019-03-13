@@ -1,28 +1,41 @@
+import { Color } from '../../enum/color';
+
 const message = require('../../builder/messageBuilder');
+const rewire = require('rewire');
+const messageRewire = rewire('../../../dist/builder/messageBuilder');
 
-// const rewire = require('rewire');
-// const messageRewire = rewire('../../builder/messageBuilder');
-// const getVerticeColor = MessageBuilderRewire.__get__('getVerticeColor');
-// const addEscapeString = messageRewire.__get__('addEscapeString');
-// const buildVerticesTooltip = MessageBuilderRewire.__get__('buildVerticesTooltip');
-
+const addEscapeString = messageRewire.__get__('addEscapeString');
+const getVerticeColor = messageRewire.__get__('getVerticeColor');
 
 describe('MessageBuilder', function() {
   describe('addEscapeString', () => {
     it('Add addEscapeString properly', () => {
-      const rewire = require('rewire');
-      const messageRewire = rewire('/Users/pongpanut/Documents/10x/functions/dist/builder/messageBuilder');
-      const addEscapeString = messageRewire.__get__('addEscapeString');
       expect(addEscapeString('"name"\n address')).toEqual('\\"name\\"\\n address');
+    })
+  });
+
+  describe('getVerticeColor', () => {
+    it('return Color.RED if state is ENABLED and isFallback is true', () => {
+      expect(getVerticeColor("TEST_ENABLED",true)).toEqual(Color.RED);
+    })
+    it('return Color.GREEN if state is ENABLED and isFallback is false', () => {
+      expect(getVerticeColor("TEST_ENABLED",false)).toEqual(Color.GREEN);
+    })
+    it('return Color.BLUE if state is UNSPECIFIED and isFallback is true', () => {
+      expect(getVerticeColor("TEST_UNSPECIFIED",true)).toEqual(Color.BLUE);
+    })
+    it('return Color.BLACK if state is UNSPECIFIED and isFallback is false', () => {
+      expect(getVerticeColor("TEST_UNSPECIFIED",false)).toEqual(Color.BLACK);
     })
   });
 
   describe('buildVerticesTooltip', () => {
     it('Add addEscapeString properly', () => {
-      const rewire = require('rewire');
-      const messageRewire = rewire('/Users/pongpanut/Documents/10x/functions/dist/builder/messageBuilder');
-      const addEscapeString = messageRewire.__get__('addEscapeString');
       expect(addEscapeString('"name"\n address')).toEqual('\\"name\\"\\n address');
+    })
+
+    it('Add addEscapeString properly when input is empty', () => {
+      expect(addEscapeString('')).toEqual('');
     })
   });
 
