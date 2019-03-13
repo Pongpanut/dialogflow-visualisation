@@ -2,7 +2,7 @@ const stringUtils = require('../utils/StringUtils');
 import { Color } from '../enum/color';
 import { EdgeColor } from '../enum/edgeColor';
 
-export class MessageBuilder {
+export default class MessageBuilder {
   constructor() {
     //
   }
