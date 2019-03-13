@@ -116,9 +116,6 @@ function getTrainingPhrases(trainingPhrases) : string {
     return (intent.trainingPhrase !== ''
           ? `Training phrases is ${addEscapeString(intent.trainingPhrase)} </br>`
           : '')
-        + (intent.trainingPhrase !== ''
-          ? `Training phrases is ${addEscapeString(intent.trainingPhrase)} </br>`
-          : '')
         + (intent.payloadCount > 0
           ? `Number of Payload is ${intent.payloadCount}`
           : '');

@@ -1,6 +1,6 @@
 const message = require('../../builder/messageBuilder');
 
-const rewire = require('rewire');
+// const rewire = require('rewire');
 // const messageRewire = rewire('../../builder/messageBuilder');
 // const getVerticeColor = MessageBuilderRewire.__get__('getVerticeColor');
 // const addEscapeString = messageRewire.__get__('addEscapeString');
@@ -8,11 +8,23 @@ const rewire = require('rewire');
 
 
 describe('MessageBuilder', function() {
-  // describe('hasProp()', () => {
-  //   it('Object has a prop "name"', () => {
-  //     addEscapeString('name');
-  //   })
-  // });
+  describe('addEscapeString', () => {
+    it('Add addEscapeString properly', () => {
+      const rewire = require('rewire');
+      const messageRewire = rewire('/Users/pongpanut/Documents/10x/functions/dist/builder/messageBuilder');
+      const addEscapeString = messageRewire.__get__('addEscapeString');
+      expect(addEscapeString('"name"\n address')).toEqual('\\"name\\"\\n address');
+    })
+  });
+
+  describe('buildVerticesTooltip', () => {
+    it('Add addEscapeString properly', () => {
+      const rewire = require('rewire');
+      const messageRewire = rewire('/Users/pongpanut/Documents/10x/functions/dist/builder/messageBuilder');
+      const addEscapeString = messageRewire.__get__('addEscapeString');
+      expect(addEscapeString('"name"\n address')).toEqual('\\"name\\"\\n address');
+    })
+  });
 
   describe('getEdgeString', function() {
     it('should return edge string properly', async () => {
@@ -45,7 +57,7 @@ describe('MessageBuilder', function() {
       intentIndex.set('intent2', 2);
       const intentDict = intentDictJson;
       let response = await message.getVerticesString(intentIndex, intentDict, 2); 
-      let intentStr = '{id: 1 , label: "intent1",\n        font: {color: \'#FF0000\'},\n        title: "Number of Payload is 1"},{id: 2 , label: "intent2",\n        font: {color: \'#000000\'},\n        title: "Training phrases is โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Training phrases is โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Number of Payload is 1"},';
+      let intentStr = '{id: 1 , label: "intent1",\n        font: {color: \'#FF0000\'},\n        title: "Number of Payload is 1"},{id: 2 , label: "intent2",\n        font: {color: \'#000000\'},\n        title: "Training phrases is โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Number of Payload is 1"},';
       let idvIntentStr = ''; 
       expect(response.intentStr).toEqual(intentStr);
       expect(response.idvIntentStr ).toEqual(idvIntentStr);
@@ -74,7 +86,7 @@ describe('MessageBuilder', function() {
       const intentDict = intentDictJson;
       let response = await message.getVerticesString(intentIndex, intentDict, 2); 
       let intentStr = '{id: 1 , label: "intent1",\n        font: {color: \'#FF0000\'},\n        title: "Number of Payload is 1"},';
-      let idvIntentStr = `{id: 2 , label:" intent2",\n        font: {color: '#000000'},\n        title: "Training phrases is โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Training phrases is โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Number of Payload is 1"},`
+      let idvIntentStr = `{id: 2 , label:" intent2",\n        font: {color: '#000000'},\n        title: "Training phrases is โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Number of Payload is 1"},`
       expect(response.intentStr).toEqual(intentStr);
       expect(response.idvIntentStr).toEqual(idvIntentStr);
     })
