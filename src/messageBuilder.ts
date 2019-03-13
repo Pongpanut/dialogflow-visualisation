@@ -15,7 +15,7 @@ export class MessageBuilder {
         const outputIntent = intents.filter(x => x.inputContextNames[0] === outputContext.name);
         if (outputIntent) {
           outputIntent.forEach((output, index) => {
-            edgeString += `{from:' ${dataObj.index} '
+            edgeString += `{from:'${dataObj.index}'
             ,color:{color:\' ${Color[EdgeColor[index]]}\'},
             to: ${intentIndex.get(output.displayName)},
             title: " ${stringUtils.extractIntentName(outputContext.name)}
