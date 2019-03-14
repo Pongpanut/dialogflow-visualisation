@@ -50,11 +50,9 @@ describe('MessageBuilder', () => {
       intentIndex.set('intent2', 4);
       const edgeString = `{from:'1'
           ,color:{color:\' #69b3a2\'},
-          to: 3,
-          title: 'output1 </br> <p style =\"color:red\">lifespanCount: <b> 3 </b></p>'},{from:'1'
+          to: 3,title: 'output1 </br><p style =\"color:red\">lifespanCount: <b> 3 </b></p>'},{from:'1'
           ,color:{color:\' #0000ff\'},
-          to: 4,
-          title: 'output1 </br> <p style =\"color:red\">lifespanCount: <b> 3 </b></p>'},`;
+          to: 4,title: 'output1 </br><p style =\"color:red\">lifespanCount: <b> 3 </b></p>'},`;
 
       const response = await message.getEdgeString(output, intent, intentIndex);
       expect(response).toEqual(edgeString);
@@ -63,7 +61,8 @@ describe('MessageBuilder', () => {
 
   describe('getVerticesString', () => {
     it('should return vertices string properly with fully relations', async () => {
-      const intentDictJson = require('../mockData/builder/messageBuilder/getVerticesString/intentDict.json');
+      const intentDictJson =
+      require('../mockData/builder/messageBuilder/getVerticesString/intentDict.json');
 
       const intentIndex = new Map<string, number>();
       intentIndex.set('intent1', 1);
@@ -132,7 +131,7 @@ describe('MessageBuilder', () => {
       expect(messageText.responseTxt).toBe('');
     });
 
-    test.each([[ 0.3, 'ขออภัยค่ะ ช่วยแจ้งเรื่องที่ลูกค้าต้องให้น้องบอทช่วยเหลืออีกครั้งนะคะ'],
+    test.each([[0.3, 'ขออภัยค่ะ ช่วยแจ้งเรื่องที่ลูกค้าต้องให้น้องบอทช่วยเหลืออีกครั้งนะคะ'],
               [0.7, 'น้องบอทขอแนะนำโปรโมชั่นร้านอาหารอร่อยๆตามนี้เลยค่ะ ไปดูกันเลย!']])(
       'should random second message and assign to result object depend on math.random',
       (a, expected) => {

@@ -11,8 +11,7 @@ async function getEdgeString(data, intents, intentIndex): Promise<string> {
         outputIntent.forEach((output, index) => {
           edgeString += `{from:'${dataObj.index}'
           ,color:{color:\' ${Color[EdgeColor[index]]}\'},
-          to: ${intentIndex.get(output.displayName)},
-          title: '${stringUtils.extractIntentName(outputContext.name)} </br> <p style =\"color:red\">lifespanCount: <b> ${outputContext.lifespanCount} </b></p>'},`;
+          to: ${intentIndex.get(output.displayName)},title: '${stringUtils.extractIntentName(outputContext.name)} </br><p style =\"color:red\">lifespanCount: <b> ${outputContext.lifespanCount} </b></p>'},`;
         });
       }
     });
