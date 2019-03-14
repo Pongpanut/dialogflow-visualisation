@@ -113,7 +113,10 @@ function getTrainingPhrases(trainingPhrases) : string {
 
   function buildVerticesTooltip(intent) {
     return (intent.trainingPhrase !== ''
-          ? `Training phrases is ${addEscapeString(intent.trainingPhrase)} </br>`
+          ? `Training phrases are ${addEscapeString(intent.trainingPhrase)} </br>`
+          : '')
+        + (intent.responseMsg !== ''
+          ? `Response Message is ${addEscapeString(intent.responseMsg)} </br>`
           : '')
         + (intent.payloadCount > 0
           ? `Number of Payload is ${intent.payloadCount}`

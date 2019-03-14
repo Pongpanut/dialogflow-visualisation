@@ -8,10 +8,10 @@ const config: Config = require('./config/config.json');
 
 
 app.set('view engine', 'ejs');
-app.get('/', (req, res) => runSample(config.projectId, res));
+app.get('/', (req, res) => composeHtml(config.projectId, res));
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
 
-async function runSample(projectId = 'your-project-id', res) {
+async function composeHtml(projectId = 'your-project-id', res) {
   const intentsResult = await dialogflowService.getIntents(projectId);
   const response = await htmlBuilder.buildHtmlText(intentsResult);
   res.render('index', {projectId: config.projectId,
