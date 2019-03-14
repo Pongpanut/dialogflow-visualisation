@@ -6,7 +6,7 @@ import { IIntent } from '../../interface/IIntent';
 
 describe('HtmlBuilder', function() {
   describe('buildHtmlText', () => {
-    it('should return vertices string properly with fully relations', async () => {
+    it('should prepare properties for html building', async () => {
       const intentJson = require('../mockData/builder/htmlBuilder/buildHtmlText/intent1.json');      
       const intents = intentJson;
       const getMessageTextFake = jest.fn(() => ({ 

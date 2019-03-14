@@ -70,7 +70,7 @@ describe('MessageBuilder', function() {
       intentIndex.set('intent2', 2);
       const intentDict = intentDictJson;
       let response = await message.getVerticesString(intentIndex, intentDict, 2); 
-      let intentStr = '{id: 1 , label: "intent1",\n        font: {color: \'#FF0000\'},\n        title: "Number of Payload is 1"},{id: 2 , label: "intent2",\n        font: {color: \'#000000\'},\n        title: "Training phrases is โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Number of Payload is 1"},';
+      let intentStr = '{id: 1 , label: "intent1",\n        font: {color: \'#FF0000\'},\n        title: "Number of Payload is 1"},{id: 2 , label: "intent2",\n        font: {color: \'#000000\'},\n        title: "Training phrases are โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Response Message is ได้เลยค่ะ น้องบอทขอเสนอเป็น สินเชื่อปรับได้ตามใจคุณ ค่ะ </br>Number of Payload is 1"},';
       let idvIntentStr = ''; 
       expect(response.intentStr).toEqual(intentStr);
       expect(response.idvIntentStr ).toEqual(idvIntentStr);
@@ -99,7 +99,7 @@ describe('MessageBuilder', function() {
       const intentDict = intentDictJson;
       let response = await message.getVerticesString(intentIndex, intentDict, 2); 
       let intentStr = '{id: 1 , label: "intent1",\n        font: {color: \'#FF0000\'},\n        title: "Number of Payload is 1"},';
-      let idvIntentStr = `{id: 2 , label:" intent2",\n        font: {color: '#000000'},\n        title: "Training phrases is โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Number of Payload is 1"},`
+      let idvIntentStr = `{id: 2 , label:" intent2",\n        font: {color: '#000000'},\n        title: "Training phrases are โอเค,สนใจจ้า,ถูกต้องแล้ว </br>Response Message is ได้เลยค่ะ น้องบอทขอเสนอเป็น สินเชื่อปรับได้ตามใจคุณ </br>Number of Payload is 1"},`
       expect(response.intentStr).toEqual(intentStr);
       expect(response.idvIntentStr).toEqual(idvIntentStr);
     })
