@@ -29,7 +29,7 @@ async function getVerticesString(intentIndex, intentDict, noOfVertices): Promise
 
   for (i = 1 ; i <= noOfVertices ; i += 1) {
     const intent = intentDict.find(x => x.id === i);
-    if( intent ){
+    if (intent) {
       color = getVerticeColor(intent.webhookState, intent.isFallback);
       if (intent.inputContextNames !== '' || intent.outputContexts !== '') {
         intentStr += `{id: ${i} , label: "${intent.intentName}",
@@ -48,86 +48,83 @@ async function getVerticesString(intentIndex, intentDict, noOfVertices): Promise
   };
 }
 
-
 function getTrainingPhrases(trainingPhrases) : string {
-    let trainingPhrasesTxt = '';
+  let trainingPhrasesTxt = '';
 
-    if (trainingPhrases && trainingPhrases.length) {
-      for (const { phrase, index } of trainingPhrases
-        .map((phrase, index) => ({ phrase, index }))) {
-        if (index === 3) break;
-        trainingPhrasesTxt += phrase.parts[0].text;
-        if ((index < trainingPhrases.length - 1) && index < 2) {
-          trainingPhrasesTxt += ',';
-        }
+  if (trainingPhrases && trainingPhrases.length) {
+    for (const { phrase, index } of trainingPhrases
+      .map((phrase, index) => ({ phrase, index }))) {
+      if (index === 3) break;
+      trainingPhrasesTxt += phrase.parts[0].text;
+      if ((index < trainingPhrases.length - 1) && index < 2) {
+        trainingPhrasesTxt += ',';
       }
     }
-
-    return trainingPhrasesTxt;
   }
 
-  function getMessageText(messages) : any {
-    let responseTxt : string = '';
-    let payloadResponse : number = 0;
-    
-    messages.forEach((messageObj) => {
-      if (messageObj.message === 'text' && messageObj.text) {
-        const response = (messageObj.text.text) ? messageObj.text.text : [];
-        if (response.length > 1) {
-          responseTxt = response[Math.floor(Math.random() * response.length)];
-        } else {
-          responseTxt = response[0];
-        }
+  return trainingPhrasesTxt;
+}
+
+function getMessageText(messages) : any {
+  let responseTxt : string = '';
+  let payloadResponse : number = 0;
+
+  messages.forEach((messageObj) => {
+    if (messageObj.message === 'text' && messageObj.text) {
+      const response = (messageObj.text.text) ? messageObj.text.text : [];
+      if (response.length > 1) {
+        responseTxt = response[Math.floor(Math.random() * response.length)];
       } else {
-        payloadResponse += 1;
+        responseTxt = response[0];
       }
-    });
-
-    return {
-      responseTxt,
-      payloadResponse
-    };
-  }
-
-  function getVerticeColor(webhookState, isFallback) : Color {
-    const state = stringUtils.extractWebhookState(webhookState);
-    let color;
-    if (state === 'ENABLED' && isFallback) {
-      color = Color.RED;
-    } else if (state === 'ENABLED') {
-      color =  Color.GREEN;
-    } else if (isFallback) {
-      color =  Color.BLUE;
     } else {
-      color =  Color.BLACK;
+      payloadResponse += 1;
     }
-    return color;
-  }
+  });
 
-  function addEscapeString(originalText) : string {
-    if (originalText) {
-      return originalText.replace(/\n/g, '\\n').replace(/"/g, '\\"');
-    }
-    return '';
-  }
+  return {
+    responseTxt,
+    payloadResponse
+  };
+}
 
-  function buildVerticesTooltip(intent) {
-    return (intent.trainingPhrase !== ''
-          ? `Training phrases are ${addEscapeString(intent.trainingPhrase)} </br>`
-          : '')
-        + (intent.responseMsg !== ''
-          ? `Response Message is ${addEscapeString(intent.responseMsg)} </br>`
-          : '')
-        + (intent.payloadCount > 0
-          ? `Number of Payload is ${intent.payloadCount}`
-          : '');
+function getVerticeColor(webhookState, isFallback) : Color {
+  const state = stringUtils.extractWebhookState(webhookState);
+  let color;
+  if (state === 'ENABLED' && isFallback) {
+    color = Color.RED;
+  } else if (state === 'ENABLED') {
+    color =  Color.GREEN;
+  } else if (isFallback) {
+    color =  Color.BLUE;
+  } else {
+    color =  Color.BLACK;
   }
+  return color;
+}
 
-  module.exports = {
-    getEdgeString,
-    getVerticesString,
-    getTrainingPhrases,
-    getMessageText
+function addEscapeString(originalText) : string {
+  if (originalText) {
+    return originalText.replace(/\n/g, '\\n').replace(/"/g, '\\"');
   }
-  
+  return '';
+}
 
+function buildVerticesTooltip(intent) {
+  return (intent.trainingPhrase !== ''
+        ? `Training phrases are ${addEscapeString(intent.trainingPhrase)} </br>`
+        : '')
+      + (intent.responseMsg !== ''
+        ? `Response Message is ${addEscapeString(intent.responseMsg)} </br>`
+        : '')
+      + (intent.payloadCount > 0
+        ? `Number of Payload is ${intent.payloadCount}`
+        : '');
+}
+
+module.exports = {
+  getEdgeString,
+  getVerticesString,
+  getTrainingPhrases,
+  getMessageText
+};

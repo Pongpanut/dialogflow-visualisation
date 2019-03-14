@@ -1,10 +1,52 @@
-const htmlBuilder = require('../../builder/htmlBuilder');
-const message = require('../../builder/messageBuilder');  
+// const htmlBuilder = require('../../builder/htmlBuilder');
+import htmlBuilder from '../../builder/htmlBuilder';
+
+const message = require('../../builder/messageBuilder'); 
 const stringUtils = require('../../utils/StringUtils'); 
+// const dialogflowService = require('../../service/dialogflowService');
+
 import { IOutputContext } from '../../interface/IOutputContext';
 import { IIntent } from '../../interface/IIntent';
 
+
+// jest.mock("../../builder/htmlBuilder", () =>  {
+//   return {
+//     buildHtmlText: jest.fn(() => "projectAgentPath")
+//   };
+//   // const { default: mockRealPerson } = jest.requireActual('../../builder/htmlBuilder');
+//   // mockRealPerson.buildHtmlText = function () {
+//   //     return "Hello";
+//   // }    
+
+//   // return mockRealPerson
+// });
+
 describe('HtmlBuilder', function() {
+
+  // describe('composeHtml', () => {
+
+  //   afterEach(() => {
+  //     jest.resetAllMocks()
+  //   })
+
+  //   // it('should render html properly', async () => {
+  //   //   htmlBuilder.buildHtmlText = jest.fn().mockReturnValue('mock full name');
+  //   //   const getIntentsFake = jest.fn(() => "intents");
+  //   //   // const buildHtmlTextFake = jest.fn(() => "html");
+  //   //   dialogflowService.getIntents = getIntentsFake;
+  //   //   // htmlBuilder.buildHtmlText = jest.fn(() => "intents")
+  //   //   // htmlBuilder.buildHtmlText = buildHtmlTextFake;
+
+  //   //   let res = {
+  //   //     render : jest.fn() 
+  //   //   };
+
+  //   //   htmlBuilder.composeHtml('id', res);
+  //   //   expect(res.render).toBeCalledWith( null);
+      
+  //   // })
+  // });
+
   describe('buildHtmlText', () => {
     it('should prepare properties for html building', async () => {
       const intentJson = require('../mockData/builder/htmlBuilder/buildHtmlText/intent1.json');      
@@ -73,8 +115,8 @@ describe('HtmlBuilder', function() {
       });
 
       let result = await htmlBuilder.buildHtmlText(intents); 
-      expect(getEdgeStringFake).toBeCalledWith(outputContexts, intents[0],intentIndex);      
-      expect(getVerticesStringFake).toBeCalledWith(intentIndex, intentList, 2);
+      expect(message.getEdgeString).toBeCalledWith(outputContexts, intents[0],intentIndex);      
+      expect(message.getVerticesString).toBeCalledWith(intentIndex, intentList, 2);
       expect(result).toEqual(expected);
     })
   });

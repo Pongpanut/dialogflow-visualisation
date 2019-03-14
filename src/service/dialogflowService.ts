@@ -19,6 +19,4 @@ async function getIntents(projectId): Promise<any> {
 
 module.exports = {
   getIntents
-}
-  
-
+};
