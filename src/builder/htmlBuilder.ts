@@ -48,8 +48,8 @@ export default class HtmlBuilder {
         }
       });
 
-      edgeStr = await message.getEdgeString(intentOutputContexts, intents, intentIndex);
-      verticesStr = await message.getVerticesString(intentIndex, intents, intents.length);
+      edgeStr = await message.getEdgeContent(intentOutputContexts, intents, intentIndex);
+      verticesStr = await message.getVerticesContent(intentIndex, intents, intents.length);
     }
     return {
       edgeStr,

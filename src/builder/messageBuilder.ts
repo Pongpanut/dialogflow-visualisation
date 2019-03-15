@@ -2,30 +2,41 @@ const stringUtils = require('../utils/StringUtils');
 import { Color } from '../enum/color';
 import { EdgeColor } from '../enum/edgeColor';
 
-function getEdgeString(intentOutputContexts, intents, intentIndex): string {
-  let edgeString = '';
-  intentOutputContexts.forEach((intent) => {
-    intent.outputContexts.forEach((outputContext) => {
-      const outputIntent = intents.filter(x => x.inputContextNames[0] === outputContext.name);
-      if (outputIntent) {
 
-        outputIntent.forEach((output, index) => {
-          edgeString += `{from:'${intent.index}'
-          ,color:{color:\' ${Color[EdgeColor[index]]}\'},
-          to: ${intentIndex.get(output.intentName)},title: '${outputContext.name} </br><p style =\"color:red\">lifespanCount: <b> ${outputContext.lifespanCount} </b></p>'},`;
-        });
-      }
-    });
+function getEdgeContent(intentOutputContexts, intents, intentIndex): string {
+  let edgeString: string = '';
+
+  intentOutputContexts.forEach((context) => {
+    edgeString += context.outputContexts.map((outputContext) => {
+      outputContext.index = context.index;
+      outputContext.intents = intents;
+      outputContext.intentIndex = intentIndex;
+      return outputContext;
+    }).reduce(getEdgeString, '')
   });
   return edgeString;
 }
 
-async function getVerticesString(intentIndex, intents, noOfVertices): Promise<any> {
+function getEdgeString(sum, input): string {
+  let edgeString = '';
+
+  const outputIntent = input.intents.filter(x => x.inputContextNames[0] === input.name);
+  if (outputIntent) {
+    outputIntent.forEach((output, index) => {
+      edgeString += `{from:'${input.index}'
+      ,color:{color:\' ${Color[EdgeColor[index]]}\'},
+      to: ${input.intentIndex.get(output.intentName)},title: '${input.name} </br><p style =\"color:red\">lifespanCount: <b> ${input.lifespanCount} </b></p>'},`;
+    });
+  }
+
+  return edgeString
+}
+
+async function getVerticesContent(intentIndex, intents, noOfVertices): Promise<any> {
   let i: number = 0;
   let intentStr: string = '';
   let idvIntentStr: string = '';
   let color: string = '';
-  console.log(intents)
   for (i = 1; i <= noOfVertices; i += 1) {
     const intent = intents.find(x => x.id === i);
     if (intent) {
@@ -124,8 +135,8 @@ function buildVerticesTooltip(intent) {
 }
 
 module.exports = {
-  getEdgeString,
-  getVerticesString,
+  getEdgeContent,
+  getVerticesContent,
   getTrainingPhrases,
   getMessageText
 };
