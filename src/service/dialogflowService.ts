@@ -1,22 +1,49 @@
-const dialogflow = require('dialogflow');
+// const dialogflow = require('dialogflow'); // Consistency 
+import { IIntent } from '../interface/IIntent';
+const message = require('../builder/messageBuilder');
+// import { message } from '../builder/messageBuilder';
+const stringUtils = require('../utils/StringUtils');
 
-async function getIntents(projectId): Promise<any> {
-  const intentsClient = new dialogflow.IntentsClient();
-  const projectAgentPath = intentsClient.projectAgentPath(projectId);
-  let responses;
-  const request = {
-    parent: projectAgentPath,
-    intentView: 'INTENT_VIEW_FULL',
-  };
-
-  try {
-    responses = await intentsClient.listIntents(request);
-  } catch (err) {
-    console.error('ERROR:', err);
+export default class dialogflowService {
+  constructor() {
   }
-  return responses;
-}
 
-module.exports = {
-  getIntents
-};
+  async getIntents(intentsClient, projectId): Promise<any> {
+    const request = {
+      parent: intentsClient.projectAgentPath(projectId),
+      intentView: 'INTENT_VIEW_FULL',
+    };
+
+    let intents: any;
+    try {
+      const res = await intentsClient.listIntents(request);
+      intents = this.intentsMapper(res[0]);
+    } catch (err) {
+      console.error('ERROR:', err);
+    }
+    return intents;
+  }
+
+  private intentsMapper(intents): any {
+
+    const intentList: IIntent[] = [];
+    intents.forEach((intent, index) => {
+      const resText = message.getMessageText(intent.messages);
+      intentList.push({
+        inputContextNames: intent.inputContextNames ?
+          stringUtils.extractInputIntentName(intent.inputContextNames) : [],
+        outputContexts: intent.outputContexts ?
+          stringUtils.extractOutputContexts(intent.outputContexts) : [],
+        trainingPhrase: message.getTrainingPhrases(intent.trainingPhrases),
+        intentName: intent.displayName,
+        id: index,
+        payloadCount: resText.payloadResponse,
+        responseMsg: resText.responseTxt,
+        webhookState: intent.webhookState,
+        isFallback: intent.isFallback
+      });
+    });
+
+    return intentList;
+  }
+}

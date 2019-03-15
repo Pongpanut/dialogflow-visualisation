@@ -1,4 +1,4 @@
 export interface IOutputContext {
-  outputContext: any;
+  outputContexts: any;
   index: number;
 }

@@ -1,75 +1,63 @@
-import { IIntent } from '../interface/IIntent';
+// import { IIntent } from '../interface/IIntent';
 import { IOutputContext } from '../interface/IOutputContext';
+import dialogflowService from '../service/dialogflowService';
 import { Config } from '../config/config';
-const dialogflowService = require('../service/dialogflowService');
+
 const config: Config = require('../config/config.json');
 
-const exportFunctions = {
-  buildHtmlText,
-  composeHtml
-};
+// const exportFunctions = {
+//   buildHtmlText,
+//   composeHtml
+// };
+export default class HtmlBuilder {
 
-async function composeHtml(projectId = 'your-project-id', res) {
-  const intentsResult = await dialogflowService.getIntents(projectId);
-  const response = await exportFunctions.buildHtmlText(intentsResult);
-  res.render('index', {projectId: config.projectId,
-    nodes: JSON.stringify(response.intentStr),
-    nodes2: JSON.stringify(response.idvIntentStr),
-    edge: JSON.stringify(response.edgeStr)
-  });
-}
-
-async function buildHtmlText(intentsResult): Promise<any> {
-  const stringUtils = require('../utils/StringUtils');
-  const message = require('./messageBuilder');
-  const intentIndex = new Map<string, number>();
-  let verticesStr : any;
-  let edgeStr : string = '';
-
-  if (intentsResult) {
-    const intents =  intentsResult[0];
-    const intentList: IIntent[] = [];
-    const outputContexts : IOutputContext[] = [];
-
-    intents.forEach((data, index) => {
-      const newIndex = index + 1;
-      intentIndex.set(data.displayName, newIndex);
+  async  composeHtml(intentsClient, projectId = 'your-project-id', res) {
+    var service = new dialogflowService();
+    let intents = await service.getIntents(intentsClient, config.projectId);
+    const response = await this.buildHtmlText(intents);
+    // return response;
+    res.render('index', {
+      projectId: config.projectId,
+      nodes: JSON.stringify(response.intentStr),
+      nodes2: JSON.stringify(response.idvIntentStr),
+      edge: JSON.stringify(response.edgeStr)
     });
-
-    intents.forEach((data, index) => {
-      const newIndex = index + 1;
-
-      if (data.outputContexts && data.outputContexts.length) {
-        outputContexts.push({
-          outputContext: data.outputContexts,
-          index: newIndex
-        });
-      }
-
-      const resText = message.getMessageText(data.messages);
-      intentList.push({
-        inputContextNames: data.inputContextNames[0] ?
-          stringUtils.extractIntentName(data.inputContextNames[0]) : '',
-        outputContexts: data.outputContexts[0] ?
-          stringUtils.extractIntentName(data.outputContexts[0].name) : '',
-        trainingPhrase: message.getTrainingPhrases(data.trainingPhrases),
-        intentName: data.displayName,
-        id:newIndex,
-        payloadCount: resText.payloadResponse,
-        responseMsg: resText.responseTxt,
-        webhookState: data.webhookState,
-        isFallback: data.isFallback
-      });
-    });
-
-    edgeStr = await message.getEdgeString(outputContexts, intents, intentIndex);
-    verticesStr = await message.getVerticesString(intentIndex, intentList, intents.length);
   }
-  return {
-    edgeStr,
-    intentStr: verticesStr.intentStr,
-    idvIntentStr: verticesStr.idvIntentStr
-  };
+
+  private setIntentIndex = (intents) => {
+    const intentIndex = new Map<string, number>();
+    intents.forEach((intent, index) => intentIndex.set(intent.intentName, index));
+    return intentIndex;
+  }
+
+  async  buildHtmlText(intents): Promise<any> {
+    // const stringUtils = require('../utils/StringUtils'); //Externalise to import
+    const message = require('./messageBuilder');
+    let verticesStr: any;
+    let edgeStr: string = '';
+    if (intents) {
+      const intentOutputContexts: IOutputContext[] = [];
+
+      const intentIndex = this.setIntentIndex(intents)
+      intents.forEach((data, index) => {
+        if (data.outputContexts && data.outputContexts.length) {
+          intentOutputContexts.push({
+            index,
+            outputContexts: data.outputContexts
+          });
+        }
+      });
+
+      edgeStr = await message.getEdgeString(intentOutputContexts, intents, intentIndex);
+      verticesStr = await message.getVerticesString(intentIndex, intents, intents.length);
+    }
+    return {
+      edgeStr,
+      intentStr: verticesStr.intentStr,
+      idvIntentStr: verticesStr.idvIntentStr
+    };
+  }
+
 }
 
-export default exportFunctions;
+
