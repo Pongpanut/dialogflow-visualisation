@@ -14,7 +14,8 @@
     "watch-node": "nodemon dist/index.js",
     "watch-ts": "tsc && npm run copy && tsc -w",
     "test": "jest",
-    "testWithCoverage": "jest --coverage"
+    "testWithCoverage": "jest --coverage",
+    "nodemon": "nodemon --watch 'src/*' --exec 'ts-node' src/index.ts"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -25,6 +26,7 @@
     "firebase-admin": "~7.0.0",
     "firebase-functions": "^2.2.0",
     "nodemon": "^1.18.10",
+    "ts-node": "^8.0.3",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

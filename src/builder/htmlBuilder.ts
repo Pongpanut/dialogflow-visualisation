@@ -2,20 +2,17 @@
 import { IOutputContext } from '../interface/IOutputContext';
 import dialogflowService from '../service/dialogflowService';
 import { Config } from '../config/config';
-
+import MessageBuilder from './messageBuilder'
 const config: Config = require('../config/config.json');
 
-// const exportFunctions = {
-//   buildHtmlText,
-//   composeHtml
-// };
 export default class HtmlBuilder {
+  constructor() {
+  }
 
   async  composeHtml(intentsClient, projectId = 'your-project-id', res) {
     var service = new dialogflowService();
     let intents = await service.getIntents(intentsClient, config.projectId);
     const response = await this.buildHtmlText(intents);
-    // return response;
     res.render('index', {
       projectId: config.projectId,
       nodes: JSON.stringify(response.intentStr),
@@ -26,15 +23,15 @@ export default class HtmlBuilder {
 
   private setIntentIndex = (intents) => {
     const intentIndex = new Map<string, number>();
-    intents.forEach((intent, index) => intentIndex.set(intent.intentName, index));
+    intents.forEach((intent, index) => { intentIndex.set(intent.intentName, index));
     return intentIndex;
   }
 
   async  buildHtmlText(intents): Promise<any> {
-    // const stringUtils = require('../utils/StringUtils'); //Externalise to import
-    const message = require('./messageBuilder');
     let verticesStr: any;
     let edgeStr: string = '';
+    let message = new MessageBuilder();
+
     if (intents) {
       const intentOutputContexts: IOutputContext[] = [];
 

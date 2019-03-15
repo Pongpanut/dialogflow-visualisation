@@ -1,6 +1,7 @@
 // const dialogflow = require('dialogflow'); // Consistency 
 import { IIntent } from '../interface/IIntent';
-const message = require('../builder/messageBuilder');
+import MessageBuilder from '../builder/messageBuilder'
+
 // import { message } from '../builder/messageBuilder';
 const stringUtils = require('../utils/StringUtils');
 
@@ -25,7 +26,7 @@ export default class dialogflowService {
   }
 
   private intentsMapper(intents): any {
-
+    const message = new MessageBuilder();
     const intentList: IIntent[] = [];
     intents.forEach((intent, index) => {
       const resText = message.getMessageText(intent.messages);

@@ -29,8 +29,16 @@ function extractWebhookState(originalText) {
   return result;
 }
 
+function addEscapeString(originalText): string {
+  if (originalText) {
+    return originalText.replace(/\n/g, '\\n').replace(/"/g, '\\"');
+  }
+  return '';
+}
+
 export = {
   extractInputIntentName,
   extractWebhookState,
-  extractOutputContexts
+  extractOutputContexts,
+  addEscapeString
 };
