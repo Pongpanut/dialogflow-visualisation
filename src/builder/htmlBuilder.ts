@@ -1,53 +1,68 @@
 // import { IIntent } from '../interface/IIntent';
 import { IOutputContext } from '../interface/IOutputContext';
 import dialogflowService from '../service/dialogflowService';
-import { Config } from '../config/config';
 import MessageBuilder from './messageBuilder'
-const config: Config = require('../config/config.json');
 
 export default class HtmlBuilder {
-  constructor() {
+  private client: any;
+
+  constructor(client) {
+    this.client = client;
   }
 
-  async  composeHtml(intentsClient, projectId = 'your-project-id', res) {
+  async composeHtml(projectId, res) {
     var service = new dialogflowService();
-    let intents = await service.getIntents(intentsClient, config.projectId);
-    const response = await this.buildHtmlText(intents);
+    let intents = await service.getIntents(this.client, projectId);
+    const response = this.buildHtmlText(intents);
     res.render('index', {
-      projectId: config.projectId,
+      projectId: projectId,
       nodes: JSON.stringify(response.intentStr),
       nodes2: JSON.stringify(response.idvIntentStr),
       edge: JSON.stringify(response.edgeStr)
     });
   }
 
-  private setIntentIndex = (intents) => {
+  private setContentIndex = (intents) => {
     const intentIndex = new Map<string, number>();
-    intents.forEach((intent, index) => { intentIndex.set(intent.intentName, index));
-    return intentIndex;
+    const intentOutputContexts: IOutputContext[] = [];
+
+    intents.forEach((intent, index) => {
+      intentIndex.set(intent.intentName, index)
+
+      if (intent.outputContexts && intent.outputContexts.length) {
+        intentOutputContexts.push({
+          index,
+          outputContexts: intent.outputContexts
+        });
+      }
+    });
+    return {
+      intentIndex,
+      intentOutputContexts
+    }
   }
 
-  async  buildHtmlText(intents): Promise<any> {
+  buildHtmlText(intents): any {
     let verticesStr: any;
     let edgeStr: string = '';
     let message = new MessageBuilder();
 
     if (intents) {
-      const intentOutputContexts: IOutputContext[] = [];
+      const content = this.setContentIndex(intents)
 
-      const intentIndex = this.setIntentIndex(intents)
-      intents.forEach((data, index) => {
-        if (data.outputContexts && data.outputContexts.length) {
-          intentOutputContexts.push({
-            index,
-            outputContexts: data.outputContexts
-          });
-        }
+      edgeStr = message.getEdgeContent({
+        intents: intents,
+        intentIndex: content.intentIndex,
+        intentOutputContexts: content.intentOutputContexts
       });
 
-      edgeStr = await message.getEdgeContent(intentOutputContexts, intents, intentIndex);
-      verticesStr = await message.getVerticesContent(intentIndex, intents, intents.length);
+      verticesStr = message.getVerticesContent({
+        intentIndex: content.intentIndex,
+        intents: intents,
+        noOfVertices: intents.length
+      });
     }
+
     return {
       edgeStr,
       intentStr: verticesStr.intentStr,

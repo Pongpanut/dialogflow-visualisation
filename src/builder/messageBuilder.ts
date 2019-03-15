@@ -6,7 +6,7 @@ export default class MessageBuilder {
   constructor() {
   }
 
-  getEdgeContent(intentOutputContexts, intents, intentIndex): string {
+  getEdgeContent({ intentOutputContexts, intents, intentIndex }): string {
     let edgeString: string = '';
 
     intentOutputContexts.forEach((context) => {
@@ -35,7 +35,7 @@ export default class MessageBuilder {
     return edgeString
   }
 
-  async getVerticesContent(intentIndex, intents, noOfVertices): Promise<any> {
+  getVerticesContent({ intentIndex, intents, noOfVertices }): any {
     let i: number = 0;
     let intentStr: string = '';
     let idvIntentStr: string = '';

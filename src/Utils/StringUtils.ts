@@ -1,4 +1,3 @@
-
 function extractInputIntentName(inputContexts): any {
   let newContext = inputContexts.map((context) => {
     const n = context.lastIndexOf('/');
