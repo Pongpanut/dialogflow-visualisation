@@ -1,83 +1,78 @@
-// const htmlBuilder = require('../../builder/htmlBuilder');
-import htmlBuilder from '../../builder/htmlBuilder';
-
-const message = require('../../builder/messageBuilder');
-const stringUtils = require('../../utils/StringUtils');
+import HtmlBuilder from '../../builder/htmlBuilder';
 import { IOutputContext } from '../../interface/IOutputContext';
-import { IIntent } from '../../interface/IIntent';
+import MessageBuilder from '../../builder/messageBuilder';
 
 describe('HtmlBuilder', () => {
   describe('buildHtmlText', () => {
-    it('should prepare properties for html building', async () => {
-      const intentJson = require('../mockData/builder/htmlBuilder/buildHtmlText/intent1.json');
-      const intents = intentJson;
-      const getMessageTextFake = jest.fn(() => ({
-        responseTxt : 'response',
-        payloadResponse: 1}
-      ));
-      const getTrainingPhrasesFake = jest.fn(() => 'trainingPhrases');
-      const getEdgeStringFake = jest.fn(() => Promise.resolve('edgeString'));
-      const getVerticesStringFake = jest.fn(() => Promise.resolve({
-        intentStr:  'intentStr',
-        idvIntentStr: 'idvIntentStr'
-      }));
-      const extractIntentNameFake = jest.fn(() => 'intentName');
-
-      message.getMessageText = getMessageTextFake;
-      message.getTrainingPhrases = getTrainingPhrasesFake;
-      message.getEdgeString = getEdgeStringFake;
-      message.getVerticesString = getVerticesStringFake;
-      stringUtils.extractIntentName = extractIntentNameFake;
-
-      const expected = {
-        edgeStr: 'edgeString',
-        intentStr :  'intentStr',
-        idvIntentStr:  'idvIntentStr'
-      };
-
-      // Prepare expected request for get edge string
+    function getContentIndex() {
       const intentIndex = new Map<string, number>();
-      intentIndex.set('intent1', 1);
-      intentIndex.set('intent2', 2);
-      const outputContexts : IOutputContext[] = [];
-      outputContexts.push({
-        outputContext: ['output1'],
+      const intentOutputContexts: IOutputContext[] = [];
+
+      intentIndex.set('intent1', 0);
+      intentIndex.set('intent2', 1);
+      intentOutputContexts.push({
+        outputContexts: ['intentName'],
+        index: 0
+      });
+      intentOutputContexts.push({
+        outputContexts: ['intentName2'],
         index: 1
       });
-      outputContexts.push({
-        outputContext: ['output2'],
-        index: 2
+
+      return {
+        intentIndex,
+        intentOutputContexts
+      }
+    }
+
+    it('should prepare properties for html building', async () => {
+      const intentJson = require('../mockData/builder/htmlBuilder/buildHtmlText/intent1.json');
+      let client: any;
+      const messageBuilder = new MessageBuilder();
+      let verticesMock = {
+        intentStr: 'intentStr',
+        idvIntentStr: 'idvIntentStr'
+      };
+
+      messageBuilder.getEdgeContent = jest.fn(() => 'edgeContent')
+      messageBuilder.getVerticesContent = jest.fn(() => verticesMock);
+
+      const htmlBuilder = new HtmlBuilder(client, messageBuilder);
+      let contentIndex = getContentIndex();
+      htmlBuilder.setContentIndex = jest.fn().mockReturnValue(contentIndex)
+
+      const intents = intentJson;
+      let htmlContext = htmlBuilder.buildHtmlContext(intents);
+
+      const expected = {
+        edgeStr: 'edgeContent',
+        intentStr: 'intentStr',
+        idvIntentStr: 'idvIntentStr'
+      };
+
+      expect(htmlContext).toEqual(expected);
+      expect(messageBuilder.getEdgeContent).toBeCalledWith({
+        intents: intents,
+        intentIndex: contentIndex.intentIndex,
+        intentOutputContexts: contentIndex.intentOutputContexts
       });
 
-      const intentList: IIntent[] = [];
-
-      intentList.push({
-        inputContextNames: 'intentName',
-        outputContexts: 'intentName',
-        intentName: 'intent1',
-        trainingPhrase: 'trainingPhrases',
-        id: 1,
-        payloadCount: 1,
-        responseMsg: 'response',
-        webhookState: 'WEBHOOK_STATE_UNSPECIFIED',
-        isFallback: false
+      expect(messageBuilder.getVerticesContent).toBeCalledWith({
+        intents: intents,
+        intentIndex: contentIndex.intentIndex,
+        noOfVertices: intents.length
       });
-      intentList.push({
-        inputContextNames: 'intentName',
-        outputContexts: 'intentName',
-        intentName: 'intent2',
-        trainingPhrase: 'trainingPhrases',
-        id: 2,
-        payloadCount: 1,
-        responseMsg: 'response',
-        webhookState: 'WEBHOOK_STATE_UNSPECIFIED',
-        isFallback: false
-      });
+    });
 
-      const result = await htmlBuilder.buildHtmlText(intents);
-      expect(message.getEdgeString).toBeCalledWith(outputContexts, intents[0], intentIndex);
-      expect(message.getVerticesString).toBeCalledWith(intentIndex, intentList, 2);
-      expect(result).toEqual(expected);
+    describe('setContentIndex', () => {
+      let client: any;
+      let messageBuilder: any;
+
+      const intentJson = require('../mockData/builder/htmlBuilder/buildHtmlText/intent1.json');
+      const htmlBuilder = new HtmlBuilder(client, messageBuilder);
+      let result = htmlBuilder.setContentIndex(intentJson)
+      let contentIndex = getContentIndex();
+      expect(result).toEqual(contentIndex);
     });
   });
 });

@@ -1,4 +1,4 @@
-const service = require('../../service/dialogflowService');
+const DialogflowService = require('../../service/dialogflowService');
 jest.mock('dialogflow', () => {
   return {
     IntentsClient: jest.fn(() => {
@@ -13,6 +13,7 @@ jest.mock('dialogflow', () => {
 describe('dialogflowService', () => {
   describe('getIntents', () => {
     it('should return intent properly', async () => {
+      const service = new DialogflowService();
       const result = await service.getIntents('proj-id');
       expect(result).toEqual('intents');
     });

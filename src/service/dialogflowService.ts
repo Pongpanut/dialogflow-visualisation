@@ -2,7 +2,7 @@ import { IIntent } from '../interface/IIntent';
 import MessageBuilder from '../builder/messageBuilder'
 const stringUtils = require('../utils/StringUtils');
 
-export default class dialogflowService {
+export default class DialogflowService {
   constructor() {
   }
 

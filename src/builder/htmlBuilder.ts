@@ -1,19 +1,21 @@
-// import { IIntent } from '../interface/IIntent';
 import { IOutputContext } from '../interface/IOutputContext';
-import dialogflowService from '../service/dialogflowService';
-import MessageBuilder from './messageBuilder'
+import DialogflowService from '../service/dialogflowService';
+import MessageBuilder from '../builder/messageBuilder'
+
 
 export default class HtmlBuilder {
   private client: any;
+  private messageBuilder: MessageBuilder;
 
-  constructor(client) {
+  constructor(client, messageBuilder) {
     this.client = client;
+    this.messageBuilder = messageBuilder;
   }
 
   async composeHtml(projectId, res) {
-    var service = new dialogflowService();
+    var service = new DialogflowService();
     let intents = await service.getIntents(this.client, projectId);
-    const response = this.buildHtmlText(intents);
+    const response = this.buildHtmlContext(intents);
     res.render('index', {
       projectId: projectId,
       nodes: JSON.stringify(response.intentStr),
@@ -22,7 +24,7 @@ export default class HtmlBuilder {
     });
   }
 
-  private setContentIndex = (intents) => {
+  setContentIndex = (intents: any): any => {
     const intentIndex = new Map<string, number>();
     const intentOutputContexts: IOutputContext[] = [];
 
@@ -42,23 +44,22 @@ export default class HtmlBuilder {
     }
   }
 
-  buildHtmlText(intents): any {
+  buildHtmlContext = (intents): any => {
     let verticesStr: any;
     let edgeStr: string = '';
-    let message = new MessageBuilder();
 
     if (intents) {
       const content = this.setContentIndex(intents)
 
-      edgeStr = message.getEdgeContent({
+      edgeStr = this.messageBuilder.getEdgeContent({
         intents: intents,
         intentIndex: content.intentIndex,
         intentOutputContexts: content.intentOutputContexts
       });
 
-      verticesStr = message.getVerticesContent({
-        intentIndex: content.intentIndex,
+      verticesStr = this.messageBuilder.getVerticesContent({
         intents: intents,
+        intentIndex: content.intentIndex,
         noOfVertices: intents.length
       });
     }
