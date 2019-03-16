@@ -1,23 +1,21 @@
 import { IOutputContext } from '../interface/IOutputContext';
-import DialogflowService from '../service/dialogflowService';
-import MessageBuilder from '../builder/messageBuilder'
-
+import MessageBuilder from '../builder/MessageBuilder';
+import DialogflowService from '../service/DialogflowService';
 
 export default class HtmlBuilder {
-  private client: any;
   private messageBuilder: MessageBuilder;
+  private dialogflowService: DialogflowService;
 
-  constructor(client, messageBuilder) {
-    this.client = client;
+  constructor({ messageBuilder, dialogflowService }) {
     this.messageBuilder = messageBuilder;
+    this.dialogflowService = dialogflowService;
   }
 
   async composeHtml(projectId, res) {
-    var service = new DialogflowService();
-    let intents = await service.getIntents(this.client, projectId);
+    const intents = await this.dialogflowService.getIntents();
     const response = this.buildHtmlContext(intents);
     res.render('index', {
-      projectId: projectId,
+      projectId,
       nodes: JSON.stringify(response.intentStr),
       nodes2: JSON.stringify(response.idvIntentStr),
       edge: JSON.stringify(response.edgeStr)
@@ -29,8 +27,7 @@ export default class HtmlBuilder {
     const intentOutputContexts: IOutputContext[] = [];
 
     intents.forEach((intent, index) => {
-      intentIndex.set(intent.intentName, index)
-
+      intentIndex.set(intent.intentName, index);
       if (intent.outputContexts && intent.outputContexts.length) {
         intentOutputContexts.push({
           index,
@@ -41,7 +38,7 @@ export default class HtmlBuilder {
     return {
       intentIndex,
       intentOutputContexts
-    }
+    };
   }
 
   buildHtmlContext = (intents): any => {
@@ -49,16 +46,16 @@ export default class HtmlBuilder {
     let edgeStr: string = '';
 
     if (intents) {
-      const content = this.setContentIndex(intents)
+      const content = this.setContentIndex(intents);
 
       edgeStr = this.messageBuilder.getEdgeContent({
-        intents: intents,
+        intents,
         intentIndex: content.intentIndex,
         intentOutputContexts: content.intentOutputContexts
       });
 
       verticesStr = this.messageBuilder.getVerticesContent({
-        intents: intents,
+        intents,
         intentIndex: content.intentIndex,
         noOfVertices: intents.length
       });
@@ -70,7 +67,4 @@ export default class HtmlBuilder {
       idvIntentStr: verticesStr.idvIntentStr
     };
   }
-
 }
-
-

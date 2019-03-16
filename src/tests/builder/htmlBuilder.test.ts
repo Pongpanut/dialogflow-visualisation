@@ -1,48 +1,44 @@
-import HtmlBuilder from '../../builder/htmlBuilder';
+import HtmlBuilder from '../../builder/HtmlBuilder';
 import { IOutputContext } from '../../interface/IOutputContext';
-import MessageBuilder from '../../builder/messageBuilder';
+import MessageBuilder from '../../builder/MessageBuilder';
+import StringUtils from '../../utils/StringUtils';
+import DialogflowService from '../../service/DialogflowService';
 
 describe('HtmlBuilder', () => {
   describe('buildHtmlText', () => {
-    function getContentIndex() {
-      const intentIndex = new Map<string, number>();
-      const intentOutputContexts: IOutputContext[] = [];
+    let htmlBuilder: any;
+    let messageBuilder: any;
 
-      intentIndex.set('intent1', 0);
-      intentIndex.set('intent2', 1);
-      intentOutputContexts.push({
-        outputContexts: ['intentName'],
-        index: 0
-      });
-      intentOutputContexts.push({
-        outputContexts: ['intentName2'],
-        index: 1
-      });
-
-      return {
-        intentIndex,
-        intentOutputContexts
-      }
-    }
-
-    it('should prepare properties for html building', async () => {
-      const intentJson = require('../mockData/builder/htmlBuilder/buildHtmlText/intent1.json');
-      let client: any;
-      const messageBuilder = new MessageBuilder();
-      let verticesMock = {
+    beforeEach(() => {
+      const verticesMock = {
         intentStr: 'intentStr',
         idvIntentStr: 'idvIntentStr'
       };
 
-      messageBuilder.getEdgeContent = jest.fn(() => 'edgeContent')
+      const stringUtils: StringUtils = new StringUtils();
+
+      messageBuilder = new MessageBuilder(stringUtils);
+      messageBuilder.getEdgeContent = jest.fn(() => 'edgeContent');
       messageBuilder.getVerticesContent = jest.fn(() => verticesMock);
 
-      const htmlBuilder = new HtmlBuilder(client, messageBuilder);
-      let contentIndex = getContentIndex();
-      htmlBuilder.setContentIndex = jest.fn().mockReturnValue(contentIndex)
+      const intentsClient: any = {};
+      const dialogflowService: DialogflowService = new DialogflowService({
+        messageBuilder,
+        intentsClient,
+        stringUtils,
+        projectId: 'projID'
+      });
+
+      htmlBuilder = new HtmlBuilder({ messageBuilder, dialogflowService });
+    });
+
+    test('should prepare properties for html building', async () => {
+      const intentJson = require('../mockData/builder/htmlBuilder/buildHtmlText/intent1.json');
+      const contentIndex = getContentIndex();
+      htmlBuilder.setContentIndex = jest.fn().mockReturnValue(contentIndex);
 
       const intents = intentJson;
-      let htmlContext = htmlBuilder.buildHtmlContext(intents);
+      const htmlContext = htmlBuilder.buildHtmlContext(intents);
 
       const expected = {
         edgeStr: 'edgeContent',
@@ -52,27 +48,46 @@ describe('HtmlBuilder', () => {
 
       expect(htmlContext).toEqual(expected);
       expect(messageBuilder.getEdgeContent).toBeCalledWith({
-        intents: intents,
+        intents,
         intentIndex: contentIndex.intentIndex,
         intentOutputContexts: contentIndex.intentOutputContexts
       });
 
       expect(messageBuilder.getVerticesContent).toBeCalledWith({
-        intents: intents,
+        intents,
         intentIndex: contentIndex.intentIndex,
         noOfVertices: intents.length
       });
     });
 
     describe('setContentIndex', () => {
-      let client: any;
-      let messageBuilder: any;
-
-      const intentJson = require('../mockData/builder/htmlBuilder/buildHtmlText/intent1.json');
-      const htmlBuilder = new HtmlBuilder(client, messageBuilder);
-      let result = htmlBuilder.setContentIndex(intentJson)
-      let contentIndex = getContentIndex();
-      expect(result).toEqual(contentIndex);
+      test('should set content index properly', () => {
+        const intentJson = require('../mockData/builder/htmlBuilder/buildHtmlText/intent1.json');
+        const result = htmlBuilder.setContentIndex(intentJson);
+        const contentIndex = getContentIndex();
+        expect(result).toEqual(contentIndex);
+      });
     });
   });
+
+  function getContentIndex() {
+    const intentIndex = new Map<string, number>();
+    const intentOutputContexts: IOutputContext[] = [];
+
+    intentIndex.set('intent1', 0);
+    intentIndex.set('intent2', 1);
+    intentOutputContexts.push({
+      outputContexts: ['intentName'],
+      index: 0
+    });
+    intentOutputContexts.push({
+      outputContexts: ['intentName2'],
+      index: 1
+    });
+
+    return {
+      intentIndex,
+      intentOutputContexts
+    };
+  }
 });

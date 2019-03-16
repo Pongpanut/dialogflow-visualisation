@@ -1,56 +1,36 @@
 [
-  { 
-    "inputContextNames": ["output1"],
-    "events": [],
-    "trainingPhrases":
-    [ { "parts": [],
-      "name": "3b8c8a83-6505-4c44-82f6-b9655ebd8458",
-      "type": "EXAMPLE",
-      "timesAddedCount": 0 } ],
-      "outputContexts": [],
-      "parameters": [],
-      "messages":
-    [ { "platform": "PLATFORM_UNSPECIFIED",
-      "text": [],
-      "message": "text" } ],
-      "defaultResponsePlatforms": [],
-      "followupIntentInfo": [],
-    "name": "projects/scb10x1-chatbot-uat/agent/intents/cec68cb2-5aca-467f-86ec-f737afc6f9bc",
-    "displayName": "intent1",
-    "priority": 500000,
+  {
+    "id": 0,
+    "inputContextNames": [
+      "output1",
+      "output1"
+    ],
+    "intentName": "intent1",
     "isFallback": false,
-    "webhookState": "WEBHOOK_STATE_UNSPECIFIED",
-    "action": "",
-    "resetContexts": false,
-    "rootFollowupIntentName": "",
-    "parentFollowupIntentName": "",
-    "mlDisabled": false 
+    "outputContexts": [
+      "OutputContext1",
+      "OutputContext2"
+    ],
+    "payloadCount": 1,
+    "responseMsg": "response",
+    "trainingPhrase": "TrainingPhrase",
+    "webhookState": "WEBHOOK_STATE_UNSPECIFIED"
   },
-  { 
-    "inputContextNames": ["output1"],
-    "events": [],
-    "trainingPhrases":
-    [ { "parts": [],
-      "name": "3b8c8a83-6505-4c44-82f6-b9655ebd8458",
-      "type": "EXAMPLE",
-      "timesAddedCount": 0 } ],
-      "outputContexts": [],
-      "parameters": [],
-      "messages":
-    [ { "platform": "PLATFORM_UNSPECIFIED",
-      "text": [],
-      "message": "text" } ],
-      "defaultResponsePlatforms": [],
-      "followupIntentInfo": [],
-    "name": "projects/scb10x1-chatbot-uat/agent/intents/cec68cb2-5aca-467f-86ec-f737afc6f9bc",
-    "displayName": "intent2",
-    "priority": 500000,
+  {
+    "id": 1,
+    "inputContextNames": [
+      "inputContext3",
+      "output2"
+    ],
+    "intentName": "intent2",
     "isFallback": false,
-    "webhookState": "WEBHOOK_STATE_UNSPECIFIED",
-    "action": "",
-    "resetContexts": false,
-    "rootFollowupIntentName": "",
-    "parentFollowupIntentName": "",
-    "mlDisabled": false 
+    "outputContexts": [
+      "OutputContext3",
+      "OutputContext4"
+    ],
+    "payloadCount": 10,
+    "responseMsg": "response2",
+    "trainingPhrase": "TrainingPhrase",
+    "webhookState": "WEBHOOK_STATE_UNSPECIFIED"
   }
 ]

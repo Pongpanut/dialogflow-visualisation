@@ -1,9 +1,11 @@
-const stringUtils = require('../utils/StringUtils');
+import StringUtils from '../utils/StringUtils';
 import { Color } from '../enum/color';
 import { EdgeColor } from '../enum/edgeColor';
 
 export default class MessageBuilder {
-  constructor() {
+  private stringUtils: StringUtils;
+  constructor(stringUtils) {
+    this.stringUtils = stringUtils;
   }
 
   getEdgeContent({ intentOutputContexts, intents, intentIndex }): string {
@@ -15,14 +17,14 @@ export default class MessageBuilder {
         outputContext.intents = intents;
         outputContext.intentIndex = intentIndex;
         return outputContext;
-      }).reduce(this.getEdgeString, '')
+      }).reduce(this.getEdgeString, '');
     });
     return edgeString;
   }
 
-  getEdgeString(sum, input): string {
+  private getEdgeString(sum, input): string {
     let edgeString = '';
-    const outputIntent = input.intents.filter(x => x.inputContextNames[0] === input.name);
+    const outputIntent = input.intents.filter(x => x.inputContextNames.includes(input.name));
 
     if (outputIntent) {
       outputIntent.forEach((output, index) => {
@@ -32,7 +34,7 @@ export default class MessageBuilder {
       });
     }
 
-    return edgeString
+    return edgeString;
   }
 
   getVerticesContent({ intentIndex, intents, noOfVertices }): any {
@@ -101,8 +103,8 @@ export default class MessageBuilder {
     };
   }
 
-  getVerticeColor(webhookState, isFallback): Color {
-    const state = stringUtils.extractWebhookState(webhookState);
+  private getVerticeColor(webhookState, isFallback): Color {
+    const state = this.stringUtils.extractWebhookState(webhookState);
     let color;
     if (state === 'ENABLED' && isFallback) {
       color = Color.RED;
@@ -118,10 +120,10 @@ export default class MessageBuilder {
 
   buildVerticesTooltip(intent) {
     return (intent.trainingPhrase !== ''
-      ? `Training phrases are ${stringUtils.addEscapeString(intent.trainingPhrase)} </br>`
+      ? `Training phrases are ${this.stringUtils.addEscapeString(intent.trainingPhrase)} </br>`
       : '')
       + (intent.responseMsg !== ''
-        ? `Response Message is ${stringUtils.addEscapeString(intent.responseMsg)} </br>`
+        ? `Response Message is ${this.stringUtils.addEscapeString(intent.responseMsg)} </br>`
         : '')
       + (intent.payloadCount > 0
         ? `Number of Payload is ${intent.payloadCount}`
