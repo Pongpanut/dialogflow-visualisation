@@ -1,19 +1,17 @@
 import { IIntent } from '../interface/IIntent';
 import MessageBuilder from '../builder/MessageBuilder';
 import dialogflow from 'dialogflow';
-import StringUtils from '../utils/StringUtils';
+import { extractInputIntentName, extractOutputContexts } from '../utils/StringUtils';
 
 export default class DialogflowService {
   private messageBuilder: MessageBuilder;
   private intentsClient: dialogflow;
   private projectId: string;
-  private stringUtils: StringUtils;
 
-  constructor({ messageBuilder, intentsClient, projectId, stringUtils }) {
+  constructor({ messageBuilder, intentsClient, projectId }) {
     this.messageBuilder = messageBuilder;
     this.intentsClient = intentsClient;
     this.projectId = projectId;
-    this.stringUtils = stringUtils;
   }
 
   async getIntents(): Promise<any> {
@@ -38,9 +36,9 @@ export default class DialogflowService {
       const resText = this.messageBuilder.getMessageText(intent.messages);
       intentList.push({
         inputContextNames: intent.inputContextNames ?
-          this.stringUtils.extractInputIntentName(intent.inputContextNames) : [],
+          extractInputIntentName(intent.inputContextNames) : [],
         outputContexts: intent.outputContexts ?
-          this.stringUtils.extractOutputContexts(intent.outputContexts) : [],
+          extractOutputContexts(intent.outputContexts) : [],
         trainingPhrase: this.messageBuilder.getTrainingPhrases(intent.trainingPhrases),
         intentName: intent.displayName,
         id: index,

@@ -2,7 +2,6 @@ import { Color } from '../../enum/color';
 import { IOutputContext } from '../../interface/IOutputContext';
 import { IIntent } from '../../interface/IIntent';
 import MessageBuilder from '../../builder/MessageBuilder';
-import StringUtils from '../../utils/StringUtils';
 
 const rewire = require('rewire');
 const messageRewire = rewire('../../../dist/builder/messageBuilder');
@@ -12,7 +11,6 @@ describe('MessageBuilder', () => {
   let intentIndex = new Map<string, number>();
   let intents: IIntent[] = [];
   let intentOutputContexts: IOutputContext[] = [];
-  const stringUtils: StringUtils = new StringUtils();
   let messageBuilder: MessageBuilder;
 
   beforeAll(() => {
@@ -21,7 +19,7 @@ describe('MessageBuilder', () => {
     intentIndex = new Map<string, number>();
     intentIndex.set('intent1', 0);
     intentIndex.set('intent2', 1);
-    messageBuilder = new MessageBuilder(stringUtils);
+    messageBuilder = new MessageBuilder();
   });
 
   describe('getVerticeColor', () => {
@@ -41,25 +39,23 @@ describe('MessageBuilder', () => {
 
   describe('getEdgeContent', () => {
     test('should return edge content properly', () => {
-
       const result = messageBuilder.getEdgeContent({
         intentOutputContexts,
         intents,
         intentIndex
       });
       const expected = `{from:'1'
-        ,color:{color:' #69b3a2'},
-        to: 0,title: 'output1 </br><p style ="color:red">lifespanCount: <b> 3 </b></p>'},{from:'2'
-        ,color:{color:' #69b3a2'},
-        to: 1,title: 'output2 </br><p style ="color:red">lifespanCount: <b> 4 </b></p>'},`;
+             ,color:{color:' #69b3a2'},
+             to: 0,title: 'output1 </br><p style ="color:red">lifespanCount: <b> 3 </b></p>'},{from:'2'
+             ,color:{color:' #69b3a2'},
+             to: 1,title: 'output2 </br><p style ="color:red">lifespanCount: <b> 4 </b></p>'},`;
 
       expect(result).toEqual(expected);
     });
   });
 
   describe('getVerticesString', () => {
-
-    it('should return vertices string properly with fully relations', async () => {
+    test('should return vertices string properly with fully relations', async () => {
       const intentsVertices =
         require('../mockData/builder/messageBuilder/getVerticesString/intents.json');
 
@@ -78,7 +74,7 @@ describe('MessageBuilder', () => {
       expect(response.idvIntentStr).toEqual(idvIntentStr);
     });
 
-    it('should return vertices string properly with empty idvIntentStr', async () => {
+    test('should return vertices string properly with empty idvIntentStr', async () => {
       const intentsVertices =
         require('../mockData/builder/messageBuilder/getVerticesString/intents_empty_idvIntent.json');
 
@@ -95,7 +91,7 @@ describe('MessageBuilder', () => {
       expect(response.idvIntentStr).toEqual('');
     });
 
-    it('should return vertices string properly with partial intent', async () => {
+    test('should return vertices string properly with partial intent', async () => {
       const intentsVertices =
         require('../mockData/builder/messageBuilder/getVerticesString/intents_partial.json');
       const response = messageBuilder.getVerticesContent({
@@ -114,7 +110,7 @@ describe('MessageBuilder', () => {
     });
 
     describe('getMessageText', () => {
-      it('should return one message to training phrase', () => {
+      test('should return one message to training phrase', () => {
         const messages = [
           {
             platform: 'LINE',
@@ -134,7 +130,7 @@ describe('MessageBuilder', () => {
           .toBe('ขออภัยค่ะ ช่วยแจ้งเรื่องที่ลูกค้าต้องให้น้องบอทช่วยเหลืออีกครั้งนะคะ');
       });
 
-      it('should return correct number of payload response', () => {
+      test('should return correct number of payload response', () => {
         const messages = [
           {
             platform: 'LINE',
@@ -148,7 +144,7 @@ describe('MessageBuilder', () => {
           }];
         const messageText = messageBuilder.getMessageText(messages);
         expect(messageText.payloadResponse).toBe(2);
-        expect(messageText.responseTxt).toBe('');
+        expect(messageText.responseTxt).toBe(undefined);
       });
 
       test.each([[0.3, 'ขออภัยค่ะ ช่วยแจ้งเรื่องที่ลูกค้าต้องให้น้องบอทช่วยเหลืออีกครั้งนะคะ'],
@@ -179,7 +175,7 @@ describe('MessageBuilder', () => {
       );
     });
     describe('getTrainingPhrases', () => {
-      it('should add one message to training phrase', () => {
+      test('should add one message to training phrase', () => {
         const training = [
           {
             parts: [{
@@ -196,7 +192,7 @@ describe('MessageBuilder', () => {
         expect(phrase).toBe('แนะนำติชมบริการ');
       });
 
-      it('should add two message to training phrase', () => {
+      test('should add two message to training phrase', () => {
         const training = [
           {
             parts: [{
@@ -224,7 +220,7 @@ describe('MessageBuilder', () => {
         expect(phrase).toBe('แนะนำติชมบริการ,แนะนำติชมบริการ');
       });
 
-      it('should add three message to training phrase', () => {
+      test('should add three message to training phrase', () => {
         const training = [
           {
             parts: [{
@@ -239,7 +235,7 @@ describe('MessageBuilder', () => {
           },
           {
             parts: [{
-              text: 'แนะนำติชมบริการ',
+              text: 'บริการ',
               entityType: '',
               alias: '',
               userDefined: false
@@ -260,10 +256,10 @@ describe('MessageBuilder', () => {
             timesAddedCount: 0
           }];
         const phrase = messageBuilder.getTrainingPhrases(training);
-        expect(phrase).toBe('แนะนำติชมบริการ,แนะนำติชมบริการ,สอบถามข้อมูล');
+        expect(phrase).toBe('แนะนำติชมบริการ,บริการ,สอบถามข้อมูล');
       });
 
-      it('should not add traing phrase more than three phrases', () => {
+      test('should not add traing phrase more than three phrases', () => {
         const training = [
           {
             parts: [{

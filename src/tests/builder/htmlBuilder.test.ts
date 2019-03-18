@@ -1,7 +1,6 @@
 import HtmlBuilder from '../../builder/HtmlBuilder';
 import { IOutputContext } from '../../interface/IOutputContext';
 import MessageBuilder from '../../builder/MessageBuilder';
-import StringUtils from '../../utils/StringUtils';
 import DialogflowService from '../../service/DialogflowService';
 
 describe('HtmlBuilder', () => {
@@ -15,9 +14,7 @@ describe('HtmlBuilder', () => {
         idvIntentStr: 'idvIntentStr'
       };
 
-      const stringUtils: StringUtils = new StringUtils();
-
-      messageBuilder = new MessageBuilder(stringUtils);
+      messageBuilder = new MessageBuilder();
       messageBuilder.getEdgeContent = jest.fn(() => 'edgeContent');
       messageBuilder.getVerticesContent = jest.fn(() => verticesMock);
 
@@ -25,7 +22,6 @@ describe('HtmlBuilder', () => {
       const dialogflowService: DialogflowService = new DialogflowService({
         messageBuilder,
         intentsClient,
-        stringUtils,
         projectId: 'projID'
       });
 

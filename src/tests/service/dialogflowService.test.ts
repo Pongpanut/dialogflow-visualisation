@@ -1,23 +1,21 @@
 import DialogflowService from '../../service/DialogflowService';
 import MessageBuilder from '../../builder/MessageBuilder';
-import StringUtils from '../../utils/StringUtils';
 import { IIntent } from '../../interface/IIntent';
+const stringUtils = require('../../utils/StringUtils');
 
 describe('dialogflowService', () => {
   let intentsClient: any;
   let messageBuilder: MessageBuilder;
   let service: DialogflowService;
-  let stringUtils: StringUtils;
   let intents: any;
 
   beforeEach(() => {
     intents = require('../mockData/service/dialogflowService/intent1.json');
 
-    stringUtils = new StringUtils();
     stringUtils.extractInputIntentName = jest.fn(() => 'inputName');
     stringUtils.extractOutputContexts = jest.fn(() => 'inputName');
 
-    messageBuilder = new MessageBuilder(stringUtils);
+    messageBuilder = new MessageBuilder();
     messageBuilder.getMessageText = jest.fn(() => ({
       payloadResponse: 1,
       responseTxt: 'response'
@@ -36,7 +34,6 @@ describe('dialogflowService', () => {
       service = new DialogflowService({
         intentsClient,
         messageBuilder,
-        stringUtils,
         projectId: 'test'
       });
 
@@ -78,7 +75,6 @@ describe('dialogflowService', () => {
       service = new DialogflowService({
         intentsClient,
         messageBuilder,
-        stringUtils,
         projectId: 'test',
       });
       console.log = jest.fn();
