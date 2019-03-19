@@ -8,7 +8,7 @@ Dialogflow platform provide service to create chatbot with a few click. using di
 
 ### Prerequisites
 
-In google cloud platform you need to create service accounts for your project 
+In google cloud platform you need to create service accounts for your project. download a key and setting your environment variable with name 'GOOGLE_APPLICATION_CREDENTIALS'
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS='your-key-file.json'
@@ -16,7 +16,7 @@ export GOOGLE_APPLICATION_CREDENTIALS='your-key-file.json'
 
 ### Installing
 
-Got to project and install all dependency
+Install all dependency
 
 ```
 npm install
@@ -30,10 +30,15 @@ In /src/config folder replace 'proj-id' with your project id
 }
 ```
 
-Start visulisation 
+Start visulisation server
 
 ```
 npm run start
+```
+
+Open your browser and enjoy with this path 
+```
+http://localhost:3000/
 ```
 
 ## Running the tests
@@ -43,5 +48,10 @@ You can execute our unit test by using below command
 
 ```
 npm t
+```
+or with coverage version
+
+```
+npm run testWithCoverage
 ```
 
