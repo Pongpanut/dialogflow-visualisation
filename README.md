@@ -45,10 +45,3 @@ You can execute our unit test by using below command
 npm t
 ```
 
-
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
