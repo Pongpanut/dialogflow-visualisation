@@ -1,6 +1,6 @@
 # Dialogflow conversation visualisation
 
-This project provide visualisation ability to your dialogflow project. and shown you how each intent has a relationship and what is an input/output context including lifespancount.
+This project enhance visualisation ability to your dialogflow project. and shown you how each intent has a relationship and what is an input/output context including lifespancount.
 
 ## Getting Started
 
