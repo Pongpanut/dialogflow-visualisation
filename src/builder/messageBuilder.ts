@@ -34,18 +34,20 @@ export default class MessageBuilder {
   getVerticesContent = ({ intentIndex, intents, noOfVertices }) => {
     let intentStr: string = '';
     let idvIntentStr: string = '';
-    let color: string = '';
+    let detail;
     for (let i = 0; i < noOfVertices; i += 1) {
       const intent = intents.find(x => x.id === i);
       if (intent) {
-        color = this.getVerticeColor(intent.webhookState, intent.isFallback);
+        detail = this.getVerticeColorAndIcon(intent.webhookState, intent.isFallback);
         if ((intent.inputContextNames.length) || intent.outputContexts.length) {
           intentStr += `{id: ${i} , label: "${intent.intentName}",
-          font: {color: '${color}'},
+          group: '${detail.icon}',
+          font: {size: 21,color: '${detail.color}'},
           title: "${this.buildVerticesTooltip(intent)}"},`;
         } else {
           idvIntentStr += `{id: ${i} , label:" ${intent.intentName}",
-          font: {color: '${color}'},
+          group: '${detail.icon}',
+          font: {size: 21,color: '${detail.color}'},
           title: "${this.buildVerticesTooltip(intent)}"},`;
         }
       }
@@ -82,19 +84,27 @@ export default class MessageBuilder {
     };
   }
 
-  private getVerticeColor(webhookState, isFallback): Color {
+  private getVerticeColorAndIcon(webhookState, isFallback) {
     const state = extractWebhookState(webhookState);
     let color;
+    let icon;
     if (state === 'ENABLED' && isFallback) {
       color = Color.RED;
+      icon = 'both'
     } else if (state === 'ENABLED') {
       color = Color.GREEN;
+      icon = 'enable'
     } else if (isFallback) {
       color = Color.BLUE;
+      icon = 'falback'
     } else {
       color = Color.BLACK;
+      icon = 'normal'
     }
-    return color;
+    return {
+      color,
+      icon
+    };
   }
 
   buildVerticesTooltip(intent) {

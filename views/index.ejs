@@ -1,95 +1,369 @@
-<!DOCTYPE HTML>
-<html>
+<html lang="en" class="gr__visjs_org">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Dialogflow visualisation</title>
+  <meta charset="UTF-8">
+  <title>Network | node as icon</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-    crossorigin="anonymous">
+
+  <script type="text/javascript">
+    function draw() {
+      var container = document.getElementById("mynetwork");
+      var container2 = document.getElementById("mynetwork2");
+      var nodes = new vis.DataSet([
+               <%- JSON.parse(nodes) %>
+             ]);
+      var nodes2 = new vis.DataSet([
+             <%- JSON.parse(nodes2) %>
+            ]);
+      var edges = new vis.DataSet([
+              <%- JSON.parse(edge) %>
+            ]);
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+
+      var data2 = {
+        nodes: nodes2,
+      };
+
+      var options = {
+        autoResize: true,
+        groups: {
+          both: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf135',
+              size: 50,
+              color: '#FF0000'
+            }
+          },
+          enable: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf1d8',
+              size: 50,
+              color: '#008000'
+            }
+          },
+          falback: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf1e0',
+              size: 50,
+              color: '#57169a'
+            }
+          },
+          normal: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf037',
+              size: 50,
+              color: '#000'
+            }
+          }
+        },
+        physics: {
+          barnesHut: {
+            avoidOverlap: 1
+          },
+          hierarchicalRepulsion: {
+            centralGravity: 0.0,
+            springLength: 300,
+            springConstant: 0.01,
+            nodeDistance: 120,
+            damping: 0.09
+          },
+          maxVelocity: 50,
+          minVelocity: 0.1,
+          solver: "hierarchicalRepulsion",
+          stabilization: {
+            enabled: true,
+            iterations: 1000,
+            updateInterval: 100,
+            onlyDynamicEdges: false,
+            fit: true
+          },
+          timestep: 0.5,
+          enabled: true
+        },
+        nodes: {
+          color: {
+            border: '#2B7CE9',
+            background: '#FFF',
+            highlight: {
+              border: '#2B7CE9',
+              background: '#D2E5FF'
+            },
+            hover: {
+              border: '#2B7CE9',
+              background: '#D2E5FF'
+            }
+          },
+          shape: "box",
+        },
+        interaction: {
+          dragNodes: true,
+          dragView: true,
+          hideEdgesOnDrag: false,
+          hideNodesOnDrag: false,
+          hover: true,
+          hoverConnectedEdges: false,
+          keyboard: {
+            enabled: false,
+            speed: { x: 0.1, y: 0.1, zoom: 0.02 },
+            bindToWindow: true
+          },
+          multiselect: false,
+          navigationButtons: true,
+          selectable: true,
+          selectConnectedEdges: true,
+          tooltipDelay: 300,
+          zoomView: true
+        },
+        edges: {
+          arrows: {
+            to: { enabled: true, scaleFactor: 1, type: "arrow" },
+            middle: { enabled: false, scaleFactor: 1, type: "arrow" },
+            from: { enabled: false, scaleFactor: 1, type: "arrow" }
+          },
+        },
+        layout: {
+          randomSeed: undefined,
+          improvedLayout: false,
+          hierarchical: {
+            enabled: true,
+            levelSeparation: 300,
+            nodeSpacing: 100,
+            treeSpacing: 50,
+            blockShifting: false,
+            edgeMinimization: false,
+            parentCentralization: true,
+            direction: "LR",
+            sortMethod: "directed"
+          }
+        }
+      };
+
+      var options2 = {
+        autoResize: true,
+        nodes: {
+          shape: "box",
+        },
+        groups: {
+          both: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf135',
+              size: 50,
+              color: '#FF0000'
+            }
+          },
+          enable: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf1d8',
+              size: 50,
+              color: '#008000'
+            }
+          },
+          falback: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf1e0',
+              size: 50,
+              color: '#57169a'
+            }
+          },
+          normal: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf037',
+              size: 50,
+              color: '#000'
+            }
+          }
+        },
+        physics: {
+          barnesHut: {
+            avoidOverlap: 1
+          }
+        },
+        interaction: {
+          dragNodes: true,
+          dragView: true,
+          hideEdgesOnDrag: false,
+          hideNodesOnDrag: false,
+          hover: true,
+          hoverConnectedEdges: false,
+          keyboard: {
+            enabled: false,
+            speed: { x: 0.1, y: 0.1, zoom: 0.02 },
+            bindToWindow: true
+          },
+          multiselect: false,
+          navigationButtons: true,
+          selectable: true,
+          selectConnectedEdges: true,
+          tooltipDelay: 300,
+          zoomView: true
+        },
+        physics: {
+          enabled: true
+        }
+      };
+
+      var timeline = new vis.Network(container, data, options);
+      var timeline2 = new vis.Network(container2, data2, options2);
+
+      var height = Math.round(window.innerHeight * 0.85) + 'px';     // The DOM way
+      //var height = Math.round($(window).height() * 0.80) + 'px';    // The jQuery way
+
+      // Now, resize the container (and not the canvas)
+      document.getElementById('mynetwork').style.height = height;
+      document.getElementById('mynetwork2').style.height = height;
+      timeline2.fit();
+    }
+  </script>
   <style type="text/css" media="screen">
     body,
     html {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
       font-family: sans-serif;
     }
-
-    .center-item {
-      margin-right: auto;
-      margin-left: auto;
-    }
-
-    .tab-container {
-      height: 800px;
-      width: 900px;
-    }
-
-    .nav-tabs {
-      box-shadow: 0 1px 0px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-      background-color: #ebbcbc;
-      color: white;
-    }
-
-    .nav-tabs .nav-link {
-      color: white;
-    }
-
-    .nav-tabs .nav-item.show .nav-link,
-    .nav-tabs .nav-link.active {
-      background-color: #df8a8a;
-      color: #aacde2;
-    }
-
-    .pad {
-      padding: 40px;
-      background-color: #f9f9fa;
-      margin-top: 31px;
-      box-shadow: 0 1px 0px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    }
-
-    .header {
-      color: #8b3085;
-    }
-
-    body {
+    /* body {
       background: #ECEFF1;
       color: rgba(0, 0, 0, 0.87);
       font-family: Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
       padding: 0;
+      width: 100vw;
+      height: 100vh
+    } */
+
+    #mynetwork,
+    #mynetwork2 {
+      /* height: 100%; */
+      /* border: 1px solid lightgrey; */
+      margin: 0 auto
     }
 
-    .message {
+
+
+    hr {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      border-top: 1px solid #4e4141;
+    }
+
+
+    body {
+      background-color: white;
+    }
+
+    .text-header {
+      margin-left: 51px;
+      color: #747474;
+    }
+
+    header {
+      padding-top: 10px;
+      background-color: #ECEFF1;
+    }
+
+    .tab-style {
+      list-style-type: none;
+      width: 180px;
+      overflow-x: auto;
+      /* change to hidden if that's what you want */
+      /*float: left;*/
+      text-align: center;
+      margin-right: 10px;
+      font-size: 17px
+    }
+
+    .page-header {
+      display: flex;
+    }
+
+
+
+    .nav>li.active>a,
+    .nav>li.active>a:focus,
+    .nav>li.active>a:hover {
+      background-color: #75a3a3;
+      color: white;
+      border-bottom: solid 5px #4d6c79;
+      border-radius: 8px;
+    }
+
+
+
+    .nav>li>a {
+      background-color: #ECEFF1;
+      color: grey;
+      border-bottom: solid 5px #cdc7c7;
+      border-radius: 8px;
+    }
+
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .row {
+      display: flex;
+    }
+    /* Create two equal columns that sits next to each other */
+
+    .column {
+      flex: 50%;
+      padding: 10px;
+      height: 300px;
+      /* Should be removed. Only for demonstration */
+    }
+
+    #message {
       background: white;
-      /* max-width: 360px;
-      margin: 100px auto 16px;
-      padding: 32px 24px; */
+      max-width: 90%;
+      margin: 50px auto 16px;
+      padding: 32px 24px;
       border-radius: 3px;
     }
 
-    .message h2 {
+    #message h2 {
       color: #ffa100;
       font-weight: bold;
       font-size: 16px;
       margin: 0 0 8px;
     }
 
-    .container .h1 {
-      font-size: 32px;
+    #message h1 {
+      font-size: 15px;
       font-weight: 300;
-      color: rgba(91, 138, 174, 0.6);
-      margin: 13px 24px 24px;
-      padding-bottom: 10px;
-      text-shadow: 2px 2px #e6e7ea;
+      color: rgba(0, 0, 0, 0.6);
+      margin: 0 0 16px;
     }
 
     #message p {
@@ -98,7 +372,7 @@
       font-size: 14px;
     }
 
-    .message a {
+    #message a {
       display: block;
       text-align: center;
       background: #039be5;
@@ -109,8 +383,8 @@
       border-radius: 4px;
     }
 
-    .message,
-    .message a {
+    #message,
+    #message a {
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
 
@@ -131,174 +405,45 @@
         border-top: 16px solid #ffa100;
       }
     }
-  </style>
-</head>
 
-<body>
-  <div class="container pad">
-    <h6 class="section-title h1 header" align="center">
-      Project id :
-      <%= projectId %>
-    </h6>
-    <div class="row center-item">
-      <div class="col-xs-12 center-item">
-        <nav>
-          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link nav-justified active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
-              aria-selected="true">Intent</a>
-            <a class="nav-item nav-link nav-justified" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
-              aria-selected="false">Individual intent</a>
-          </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            <div id="mynetwork" class="tab-container message"></div>
-          </div>
-          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <div id="mynetwork2" class="tab-container message"></div>
-          </div>
-        </div>
-      </div>
+    @media (max-width: 800px) {
+      .text-header {
+        visibility: hidden;
+      }
+    }
+  </style>
+
+</head>
+<header>
+  <div class="header">
+    <ul class="nav nav-pills  pull-right">
+      <li class="active tab-style"><a data-toggle="pill" href="#home">Intent</a></li>
+      <li class="tab-style"><a data-toggle="pill" href="#menu1">Individual intent</a></li>
+      <li class="tab-style"><a data-toggle="pill" href="#menu2">Readme</a></li>
+    </ul>
+    <div class="text-left text-header">
+      <h3>
+        <%= projectId %>
+      </h3>
     </div>
   </div>
-  <script type="text/javascript">
-    var container = document.getElementById("mynetwork");
-    var container2 = document.getElementById("mynetwork2");
-    var nodes = new vis.DataSet([
-             <%- JSON.parse(nodes) %>
-           ]);
-    var nodes2 = new vis.DataSet([
-           <%- JSON.parse(nodes2) %>
-          ]);
-    var edges = new vis.DataSet([
-            <%- JSON.parse(edge) %>
-          ]);
-    var data = {
-      nodes: nodes,
-      edges: edges
-    };
+  <hr>
+</header>
 
-    var data2 = {
-      nodes: nodes,
-    };
+<body onload="draw()" data-gr-c-s-loaded="true" cz-shortcut-listen="true">
 
-    var options = {
-      autoResize: true,
-      physics: {
-        barnesHut: {
-          avoidOverlap: 1
-        },
-        hierarchicalRepulsion: {
-          centralGravity: 0.0,
-          springLength: 300,
-          springConstant: 0.01,
-          nodeDistance: 120,
-          damping: 0.09
-        },
-        maxVelocity: 50,
-        minVelocity: 0.1,
-        solver: "hierarchicalRepulsion",
-        stabilization: {
-          enabled: true,
-          iterations: 1000,
-          updateInterval: 100,
-          onlyDynamicEdges: false,
-          fit: true
-        },
-        timestep: 0.5,
-        enabled: true
-      },
-      nodes: {
-        color: {
-          border: '#2B7CE9',
-          background: '#FFF',
-          highlight: {
-            border: '#2B7CE9',
-            background: '#D2E5FF'
-          },
-          hover: {
-            border: '#2B7CE9',
-            background: '#D2E5FF'
-          }
-        },
-        shape: "box",
-      },
-      interaction: {
-        dragNodes: true,
-        dragView: true,
-        hideEdgesOnDrag: false,
-        hideNodesOnDrag: false,
-        hover: true,
-        hoverConnectedEdges: false,
-        keyboard: {
-          enabled: false,
-          speed: { x: 0.1, y: 0.1, zoom: 0.02 },
-          bindToWindow: true
-        },
-        multiselect: false,
-        navigationButtons: true,
-        selectable: true,
-        selectConnectedEdges: true,
-        tooltipDelay: 300,
-        zoomView: true
-      },
-      edges: {
-        arrows: {
-          to: { enabled: true, scaleFactor: 1, type: "arrow" },
-          middle: { enabled: false, scaleFactor: 1, type: "arrow" },
-          from: { enabled: false, scaleFactor: 1, type: "arrow" }
-        },
-      },
-      layout: {
-        randomSeed: undefined,
-        improvedLayout: false,
-        hierarchical: {
-          enabled: true,
-          levelSeparation: 300,
-          nodeSpacing: 100,
-          treeSpacing: 50,
-          blockShifting: false,
-          edgeMinimization: false,
-          parentCentralization: true,
-          direction: "LR",
-          sortMethod: "directed"
-        }
-      }
-    };
+  <i class="fa fa-flag" style="visibility: hidden;"></i>
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <div id="mynetwork" class="tab-container message"></div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <div id="mynetwork2" class="tab-container message"></div>
+    </div>
+    <div id="menu2" class="tab-pane fade">
 
-    var options2 = {
-      autoResize: true,
-      nodes: {
-        shape: "box",
-      },
-      interaction: {
-        dragNodes: true,
-        dragView: true,
-        hideEdgesOnDrag: false,
-        hideNodesOnDrag: false,
-        hover: true,
-        hoverConnectedEdges: false,
-        keyboard: {
-          enabled: false,
-          speed: { x: 0.1, y: 0.1, zoom: 0.02 },
-          bindToWindow: true
-        },
-        multiselect: false,
-        navigationButtons: true,
-        selectable: true,
-        selectConnectedEdges: true,
-        tooltipDelay: 300,
-        zoomView: true
-      },
-      physics: {
-        enabled: true
-      }
-    };
-
-    var timeline = new vis.Network(container, data, options);
-    var timeline2 = new vis.Network(container2, data2, options2);
-    timeline2.fit();
-  </script>
+    </div>
+  </div>
 </body>
 
 </html>

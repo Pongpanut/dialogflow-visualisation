@@ -1,8 +1,8 @@
 
 import { Config } from './config/config';
-import HtmlBuilder from './builder/HtmlBuilder';
-import MessageBuilder from './builder/MessageBuilder';
-import DialogflowService from './service/DialogflowService';
+import HtmlBuilder from './builder/htmlBuilder';
+import MessageBuilder from './builder/messageBuilder';
+import DialogflowService from './service/dialogflowService';
 import * as express from 'express';
 import dialogflow from 'dialogflow';
 
@@ -24,4 +24,15 @@ const builder = new HtmlBuilder({
 });
 
 app.get('/', async (_, res) => await builder.composeHtml(config.projectId, res));
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+app.get('/2', async (_, res) => await builder.composeHtml2(config.projectId, res));
+app.get('/test', (req, res) => {
+  res.send('Hello World!');
+});
+
+const server = app.listen(8080, () => {
+  const host = server.address().address;
+  const port = server.address().port;
+
+  console.log(`Example app listening at http://${host}:${port}`);
+});
+// app.listen(3000, () => console.log('Example app listening on port 3000!'));

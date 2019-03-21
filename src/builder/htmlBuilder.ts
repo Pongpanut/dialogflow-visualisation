@@ -1,6 +1,6 @@
 import { IOutputContext } from '../interface/IOutputContext';
-import MessageBuilder from '../builder/MessageBuilder';
-import DialogflowService from '../service/DialogflowService';
+import MessageBuilder from '../builder/messageBuilder';
+import DialogflowService from '../service/dialogflowService';
 
 export default class HtmlBuilder {
   private messageBuilder: MessageBuilder;
@@ -15,6 +15,17 @@ export default class HtmlBuilder {
     const intents = await this.dialogflowService.getIntents();
     const response = this.buildHtmlContext(intents);
     res.render('index', {
+      projectId,
+      nodes: JSON.stringify(response.intentStr),
+      nodes2: JSON.stringify(response.idvIntentStr),
+      edge: JSON.stringify(response.edgeStr)
+    });
+  }
+
+  async composeHtml2(projectId, res) {
+    const intents = await this.dialogflowService.getIntents();
+    const response = this.buildHtmlContext(intents);
+    res.render('index2', {
       projectId,
       nodes: JSON.stringify(response.intentStr),
       nodes2: JSON.stringify(response.idvIntentStr),

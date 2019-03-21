@@ -1,0 +1,1084 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Bootstrap 4 One Page Website Tutorial</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" -->
+  <!-- crossorigin="anonymous"></script> -->
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: #888;
+      line-height: 30px;
+      text-align: center;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    a,
+    a:hover,
+    a:focus {
+      color: #9b59b6;
+      text-decoration: none;
+      transition: all .3s;
+    }
+
+    h1,
+    h2 {
+      margin-top: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 38px;
+      font-weight: 300;
+      color: #555;
+      line-height: 50px;
+    }
+
+    h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 300;
+      color: #555;
+      line-height: 30px;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .medium-paragraph {
+      font-size: 17px;
+      line-height: 32px;
+    }
+
+    .colored-text {
+      color: #9b59b6;
+    }
+
+     ::-moz-selection {
+      background: #9b59b6;
+      color: #fff;
+      text-shadow: none;
+    }
+
+     ::selection {
+      background: #9b59b6;
+      color: #fff;
+      text-shadow: none;
+    }
+    /***** General style, all sections *****/
+
+    .section-container {
+      margin: 0 auto;
+      padding-bottom: 80px;
+    }
+
+    .section-container-gray-bg {
+      background: #f8f8f8;
+    }
+
+    .section-container-image-bg,
+    .section-container-image-bg h2,
+    .section-container-image-bg h3 {
+      color: #fff;
+    }
+
+    .section-container-image-bg .divider-1 span {
+      border-color: #fff;
+    }
+
+    .section-description {
+      margin-top: 60px;
+      padding-bottom: 10px;
+    }
+
+    .section-description p {
+      margin-top: 20px;
+      padding: 0 120px;
+    }
+
+    .section-container-image-bg .section-description p {
+      opacity: 0.8;
+    }
+
+    .section-bottom-button {
+      padding-top: 60px;
+    }
+
+    .btn-link-1 {
+      display: inline-block;
+      height: 50px;
+      margin: 0 5px;
+      padding: 0 28px;
+      background: #9b59b6;
+      background: rgba(155, 89, 182, 0.7);
+      border: 0;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 48px;
+      color: #fff;
+      border-radius: 4px;
+      transition: all .3s;
+    }
+
+    .btn-link-1:hover,
+    .btn-link-1:focus,
+    .btn-link-1:active,
+    .btn-link-1:active:focus,
+    .btn-link-1.btn-primary:not(:disabled):not(.disabled):active,
+    .btn-link-1.btn-primary:not(:disabled):not(.disabled):active:focus {
+      background: #9b59b6;
+      background: rgba(155, 89, 182, 0.9);
+      outline: 0;
+      color: #fff;
+      box-shadow: none;
+    }
+
+    .btn-link-2 {
+      display: inline-block;
+      height: 50px;
+      margin: 0 5px;
+      padding: 0 28px;
+      background: #333;
+      background: rgba(0, 0, 0, 0.2);
+      border: 0;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 48px;
+      color: #fff;
+      border-radius: 4px;
+      transition: all .3s;
+    }
+
+    .btn-link-2:hover,
+    .btn-link-2:focus,
+    .btn-link-2:active,
+    .btn-link-2:active:focus,
+    .btn-link-2.btn-primary:not(:disabled):not(.disabled):active,
+    .btn-link-2.btn-primary:not(:disabled):not(.disabled):active:focus {
+      background: #333;
+      background: rgba(0, 0, 0, 0.4);
+      outline: 0;
+      color: #fff;
+      box-shadow: none;
+    }
+
+    .btn-link-3 {
+      display: inline-block;
+      height: 50px;
+      margin: 0 5px;
+      padding: 0 28px;
+      background: none;
+      border: 0;
+      border-bottom: 2px solid #9b59b6;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 48px;
+      color: #9b59b6;
+      border-radius: 0;
+      transition: all .3s;
+    }
+
+    .btn-link-3:hover,
+    .btn-link-3:focus,
+    .btn-link-3:active,
+    .btn-link-3:active:focus,
+    .btn-link-3.btn-primary:not(:disabled):not(.disabled):active,
+    .btn-link-3.btn-primary:not(:disabled):not(.disabled):active:focus {
+      padding: 0 10px;
+      background: none;
+      border: 0;
+      border-bottom: 2px solid #9b59b6;
+      outline: 0;
+      color: #9b59b6;
+      box-shadow: none;
+    }
+    /***** Divider *****/
+
+    .divider-1 span {
+      display: inline-block;
+      width: 200px;
+      border-bottom: 1px dashed #ccc;
+    }
+    /***** Top menu *****/
+
+    .navbar {
+      background: #444;
+      -o-transition: all .6s;
+      -moz-transition: all .6s;
+      -webkit-transition: all .6s;
+      -ms-transition: all .6s;
+      transition: all .6s;
+      backface-visibility: hidden;
+    }
+
+    .navbar.navbar-no-bg {
+      background: #444;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar-dark .navbar-nav {
+      font-size: 15px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+      color: #fff;
+      color: rgba(255, 255, 255, 0.8);
+      border: 0;
+    }
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+      color: #fff;
+    }
+
+    .navbar-dark .navbar-nav .nav-link:focus {
+      color: #fff;
+      outline: 0;
+    }
+
+    .navbar-expand-md .navbar-nav .nav-link {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .navbar-brand {
+      width: 136px;
+      border: 0;
+      text-indent: 0;
+      /* text-indent: -99999px; */
+    }
+    /***** Top content *****/
+
+    .top-content {
+      padding: 210px 0;
+      background: #C6FFDD;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #f7797d, #FBD786, #C6FFDD);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #f7797d, #FBD786, #C6FFDD);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .top-content .text {
+      color: #fff;
+    }
+
+    .top-content .text h1 {
+      margin-top: 25px;
+      color: #fff;
+    }
+
+    .top-content .description {
+      margin: 30px 0 10px 0;
+    }
+
+    .top-content .description p {
+      opacity: 0.8;
+    }
+
+    .top-content .top-big-link {
+      margin-top: 45px;
+    }
+    /***** Services *****/
+
+    .services-box {
+      padding-top: 30px;
+      text-align: left;
+    }
+
+    .services-box .services-box-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto;
+      font-size: 40px;
+      color: #fff;
+      line-height: 80px;
+      text-align: center;
+      border-radius: 28px;
+
+      background: #9b59b6;
+      /* Old browsers */
+      background: -moz-linear-gradient(top, #ffb24b 0%, #9b59b6 100%);
+      /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffb24b), color-stop(100%, #9b59b6));
+      /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, #ffb24b 0%, #9b59b6 100%);
+      /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, #ffb24b 0%, #9b59b6 100%);
+      /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, #ffb24b 0%, #9b59b6 100%);
+      /* IE10+ */
+      background: linear-gradient(to bottom, #ffb24b 0%, #9b59b6 100%);
+      /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb24b', endColorstr='#9b59b6', GradientType=0);
+      /* IE6-9 */
+    }
+
+    .services-box h3 {
+      margin-top: 0;
+      padding: 0 0 10px 0;
+    }
+    /***** About us *****/
+
+    .about-us-box {
+      margin-top: 100px;
+    }
+
+    .about-us-box-text {
+      padding-right: 30px;
+      text-align: left;
+    }
+
+    .about-us-box-text h3 {
+      margin-top: 0;
+    }
+
+    .about-us-box-text .medium-paragraph {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .about-us-box-text a {
+      border-bottom: 1px dashed #9b59b6;
+    }
+
+    .about-us-box-text a:hover,
+    .about-us-box-text a:focus {
+      border: 0;
+    }
+
+    .about-us-box-img img {
+      border-radius: 4px;
+    }
+    /***** More services *****/
+
+    .more-services-box {
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    .more-services-box .more-services-box-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto;
+      font-size: 28px;
+      color: #fff;
+      line-height: 60px;
+      text-align: center;
+      border-radius: 22px;
+
+      background: #9b59b6;
+      /* Old browsers */
+      background: -moz-linear-gradient(top, #ffb24b 0%, #9b59b6 100%);
+      /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffb24b), color-stop(100%, #9b59b6));
+      /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, #ffb24b 0%, #9b59b6 100%);
+      /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, #ffb24b 0%, #9b59b6 100%);
+      /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, #ffb24b 0%, #9b59b6 100%);
+      /* IE10+ */
+      background: linear-gradient(to bottom, #ffb24b 0%, #9b59b6 100%);
+      /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb24b', endColorstr='#9b59b6', GradientType=0);
+      /* IE6-9 */
+    }
+
+    .more-services-box h3 {
+      margin-top: 0;
+      padding: 0 0 10px 0;
+    }
+    /***** Footer *****/
+
+    footer {
+      padding: 40px 0 0 0;
+      background: #444;
+      color: #aaa;
+      text-align: left;
+    }
+
+    .footer-left a {
+      color: #ddd;
+      border-bottom: 1px dashed #ddd;
+    }
+
+    .footer-left a:hover,
+    .footer-left a:focus {
+      color: #ddd;
+      border: 0;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+    .footer-right a {
+      margin: 0 6px;
+      font-size: 32px;
+      color: #aaa;
+    }
+
+    .footer-right a:hover,
+    .footer-right a:focus {
+      color: #eee;
+    }
+
+    .footer-bottom {
+      padding-bottom: 25px;
+      text-align: center;
+    }
+
+    .footer-bottom a {
+      font-size: 32px;
+      color: #666;
+      line-height: 40px;
+    }
+
+    .footer-bottom a:hover,
+    .footer-bottom a:focus {
+      color: #888;
+    }
+    /*Media query*/
+
+    @media (min-width: 992px) and (max-width: 1199px) {
+
+      .services-box .services-box-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 32px;
+        line-height: 60px;
+        border-radius: 22px;
+      }
+
+      .about-us-box-text {
+        padding-right: 0;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+
+      .navbar-expand-md .navbar-nav .nav-link {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+      }
+
+      .top-content {
+        padding: 180px 0;
+      }
+
+      .section-description p {
+        padding: 0;
+      }
+
+      .services-box .services-box-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 26px;
+        line-height: 50px;
+        border-radius: 18px;
+      }
+
+      .about-us-box {
+        margin-top: 80px;
+      }
+      .about-us-box:last-child {
+        margin-top: 50px;
+      }
+      .about-us-box-text {
+        padding-right: 0;
+        text-align: center;
+      }
+
+      .more-services-box .more-services-box-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 26px;
+        line-height: 50px;
+        border-radius: 18px;
+      }
+
+      .portfolio-box h3:hover i {
+        padding-left: 10px;
+      }
+
+      .blog-box h3:hover i {
+        padding-left: 10px;
+      }
+    }
+
+    @media (max-width: 767px) {
+
+      .navbar.navbar-no-bg {
+        background: #444;
+      }
+      .navbar-dark .navbar-toggler {
+        border-color: #444;
+      }
+      .navbar-dark .navbar-toggler:focus {
+        background: #333;
+        outline: 0;
+      }
+      .navbar-expand-md .navbar-nav .nav-link {
+        padding-top: 0.3rem;
+        padding-bottom: 0.3rem;
+      }
+
+      .top-content {
+        padding: 140px 0;
+      }
+      .top-content .top-big-link {
+        margin-top: 25px;
+      }
+      .top-content .top-big-link a.btn {
+        margin-top: 10px;
+      }
+
+      .section-description p {
+        padding: 0;
+      }
+
+      .services-container {
+        padding-bottom: 60px;
+      }
+      .services-box {
+        text-align: center;
+      }
+      .services-box h3 {
+        margin-top: 20px;
+        padding-top: 10px;
+      }
+
+      .about-us-box {
+        margin-top: 80px;
+      }
+      .about-us-box:last-child {
+        margin-top: 50px;
+      }
+      .about-us-box-text {
+        padding-right: 0;
+        text-align: center;
+      }
+
+      .more-services-box {
+        text-align: center;
+      }
+      .more-services-box h3 {
+        margin-top: 20px;
+        padding-top: 10px;
+      }
+
+      .portfolio-box {
+        text-align: center;
+      }
+      .portfolio-box-image {
+        max-width: 540px;
+        margin: 0 auto;
+      }
+
+      .blog-box {
+        text-align: center;
+      }
+      .blog-box-image {
+        max-width: 540px;
+        margin: 0 auto;
+      }
+      .blog-box h3 {
+        margin-top: 30px;
+      }
+
+      footer {
+        text-align: center;
+      }
+      .footer-right {
+        padding-top: 10px;
+        text-align: center;
+      }
+      .footer-bottom {
+        padding-top: 20px;
+      }
+    }
+
+    @media (max-width: 415px) {
+
+      h1,
+      h2 {
+        font-size: 32px;
+      }
+    }
+    /* Retina-ize images/icons */
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and ( min--moz-device-pixel-ratio: 2),
+    only screen and ( -o-min-device-pixel-ratio: 2/1),
+    only screen and ( min-device-pixel-ratio: 2),
+    only screen and ( min-resolution: 192dpi),
+    only screen and ( min-resolution: 2dppx) {
+
+      /* logo */
+      .navbar-brand {
+        background-repeat: no-repeat !important;
+        background-size: 136px 39px !important;
+      }
+    }
+  </style>
+
+  <script type="text/javascript">
+    function draw() {
+      var container = document.getElementById("mynetwork");
+      var container2 = document.getElementById("mynetwork2");
+      var nodes = new vis.DataSet([
+             <%- JSON.parse(nodes) %>
+           ]);
+      var nodes2 = new vis.DataSet([
+           <%- JSON.parse(nodes2) %>
+          ]);
+      var edges = new vis.DataSet([
+            <%- JSON.parse(edge) %>
+          ]);
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+
+      var data2 = {
+        nodes: nodes2,
+      };
+
+      var options = {
+        autoResize: true,
+        groups: {
+          both: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf135',
+              size: 50,
+              color: '#FF0000'
+            }
+          },
+          enable: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf1d8',
+              size: 50,
+              color: '#008000'
+            }
+          },
+          falback: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf1e0',
+              size: 50,
+              color: '#57169a'
+            }
+          },
+          normal: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf037',
+              size: 50,
+              color: '#000'
+            }
+          }
+        },
+        physics: {
+          barnesHut: {
+            avoidOverlap: 1
+          },
+          hierarchicalRepulsion: {
+            centralGravity: 0.0,
+            springLength: 300,
+            springConstant: 0.01,
+            nodeDistance: 120,
+            damping: 0.09
+          },
+          maxVelocity: 50,
+          minVelocity: 0.1,
+          solver: "hierarchicalRepulsion",
+          stabilization: {
+            enabled: true,
+            iterations: 1000,
+            updateInterval: 100,
+            onlyDynamicEdges: false,
+            fit: true
+          },
+          timestep: 0.5,
+          enabled: true
+        },
+        nodes: {
+          color: {
+            border: '#2B7CE9',
+            background: '#FFF',
+            highlight: {
+              border: '#2B7CE9',
+              background: '#D2E5FF'
+            },
+            hover: {
+              border: '#2B7CE9',
+              background: '#D2E5FF'
+            }
+          },
+          shape: "box",
+        },
+        interaction: {
+          dragNodes: true,
+          dragView: true,
+          hideEdgesOnDrag: false,
+          hideNodesOnDrag: false,
+          hover: true,
+          hoverConnectedEdges: false,
+          keyboard: {
+            enabled: false,
+            speed: { x: 0.1, y: 0.1, zoom: 0.02 },
+            bindToWindow: true
+          },
+          multiselect: false,
+          navigationButtons: true,
+          selectable: true,
+          selectConnectedEdges: true,
+          tooltipDelay: 300,
+          zoomView: true
+        },
+        edges: {
+          arrows: {
+            to: { enabled: true, scaleFactor: 1, type: "arrow" },
+            middle: { enabled: false, scaleFactor: 1, type: "arrow" },
+            from: { enabled: false, scaleFactor: 1, type: "arrow" }
+          },
+        },
+        layout: {
+          randomSeed: undefined,
+          improvedLayout: false,
+          hierarchical: {
+            enabled: true,
+            levelSeparation: 300,
+            nodeSpacing: 100,
+            treeSpacing: 50,
+            blockShifting: false,
+            edgeMinimization: false,
+            parentCentralization: true,
+            direction: "LR",
+            sortMethod: "directed"
+          }
+        }
+      };
+
+      var options2 = {
+        autoResize: true,
+        nodes: {
+          shape: "box",
+        },
+        groups: {
+          both: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf135',
+              size: 50,
+              color: '#FF0000'
+            }
+          },
+          enable: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf1d8',
+              size: 50,
+              color: '#008000'
+            }
+          },
+          falback: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf1e0',
+              size: 50,
+              color: '#57169a'
+            }
+          },
+          normal: {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf037',
+              size: 50,
+              color: '#000'
+            }
+          }
+        },
+        physics: {
+          barnesHut: {
+            avoidOverlap: 1
+          }
+        },
+        interaction: {
+          dragNodes: true,
+          dragView: true,
+          hideEdgesOnDrag: false,
+          hideNodesOnDrag: false,
+          hover: true,
+          hoverConnectedEdges: false,
+          keyboard: {
+            enabled: false,
+            speed: { x: 0.1, y: 0.1, zoom: 0.02 },
+            bindToWindow: true
+          },
+          multiselect: false,
+          navigationButtons: true,
+          selectable: true,
+          selectConnectedEdges: true,
+          tooltipDelay: 300,
+          zoomView: true
+        },
+        physics: {
+          enabled: true
+        }
+      };
+
+      var timeline = new vis.Network(container, data, options);
+      var timeline2 = new vis.Network(container2, data2, options2);
+
+      // var height = Math.round(window.innerHeight * 0.85) + 'px';     // The DOM way
+      // //var height = Math.round($(window).height() * 0.80) + 'px';    // The jQuery way
+
+      // // Now, resize the container (and not the canvas)
+      // document.getElementById('mynetwork').style.height = height;
+      // document.getElementById('mynetwork2').style.height = height;
+      timeline2.fit();
+    }
+  </script>
+
+  <style>
+    .row {
+      display: flex;
+    }
+
+    .column {
+      flex: 50%;
+      padding: 10px;
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body onload="draw()">
+
+  <!-- Top menu -->
+  <nav class="navbar navbar-dark fixed-top navbar-expand-md navbar-no-bg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <%= projectId %>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+        aria-label="Toggle navigation">
+			        <span class="navbar-toggler-icon"></span>
+			    </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link scroll-link" href="#services">Intent</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link scroll-link" href="#more-services">Individual intent</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link scroll-link" href="#about-us">Readme</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- intent -->
+  <div class="services-container section-container" style="background-color:#f1f1f1">
+    <div class="container" style="background-color:white">
+      <div class="row">
+        <div class="col services section-description wow fadeIn">
+          <h2>Intent</h2>
+          <div class="divider-1 wow fadeInUp"><span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div id="mynetwork" class="tab-container message"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Individual -->
+  <div class="more-services-container section-container" style="background-color:#f1f1f1">
+    <div class="container" style="background-color:white">
+
+      <div class="row">
+        <div class="col more-services section-description wow fadeIn">
+          <h2>Individual intent</h2>
+          <div class="divider-1 wow fadeInUp"><span></span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="mynetwork2" class="tab-container message"></div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- About us -->
+  <div class="about-us-container section-container section-container-gray-bg" style="background-color:#f1f1f1">
+    <div class="container" style="background-color:white">
+      <div class="row">
+        <div class="col more-services section-description wow fadeIn">
+          <h2>Read me !!!</h2>
+          <div class="divider-1 wow fadeInUp"><span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column" style="background-color:#fff;">
+          <div id="message">
+            <h5>Node</h5>
+            <ul class="fa-ul">
+              <h6>Each Node Icon and text color represent information below</h6>
+              <li style="color:#FF0000; text-align: left;"><i class="fa-li fa fa-rocket" style="color:#FF0000"></i>Webhook enable and Fallback intent</li>
+              <li style="color:#008000; text-align: left;"><i class="fa-li fa fa-send" style="color:#008000"></i>Only webhook enable</li>
+              <li style="color:#0000FF; text-align: left;"><i class="fa-li fa fa-share-alt" style="color:#0000FF"></i>Only Fallback intent</li>
+              <li style="color:#000; text-align: left;"><i class=" fa-li fa fa-align-center " style="color:#000"></i>Normal intents</li>
+            </ul>
+          </div>
+        </div>
+        <div class="column" style="background-color:#fff;">
+          <div id="message">
+            <h5>Edge</h5>
+            <ul class="fa-ul ">
+              <h6>Each edge color represent information below</h6>
+              <li style="text-align: left;"><i class="fa-li fa fa-arrow-right " style="color:#69b3a2; "></i>1st output context</li>
+              <li style="text-align: left;"><i class="fa-li fa fa-arrow-right " style="color:#0000ff; "></i>2nd output context</li>
+              <li style="text-align: left;"><i class="fa-li fa fa-arrow-right " style="color:#c62dcd; "></i>3rd output context</li>
+              <li style="text-align: left;"><i class="fa-li fa fa-arrow-right " style="color:#0cf0e9; "></i>4th output context</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col footer-bottom">
+          <a class="scroll-link" href="#services"><i class="fas fa-chevron-up"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Javascript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.0/jquery-migrate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+  <script>
+    function scroll_to(clicked_link, nav_height) {
+      var element_class = clicked_link.attr('href').replace('#', '.');
+      var scroll_to = 0;
+      if (element_class != '.top-content') {
+        element_class += '-container';
+        scroll_to = $(element_class).offset().top - nav_height;
+      }
+      if ($(window).scrollTop() != scroll_to) {
+        $('html, body').stop().animate({ scrollTop: scroll_to }, 1000);
+      }
+    }
+
+
+    jQuery(document).ready(function () {
+
+      /*
+          Navigation
+      */
+      $('a.scroll-link').on('click', function (e) {
+        e.preventDefault();
+        scroll_to($(this), $('nav').outerHeight());
+      });
+      // toggle "navbar-no-bg" class
+      $('.top-content .text').waypoint(function () {
+        $('nav').toggleClass('navbar-no-bg');
+      });
+
+      /*
+          Background slideshow
+      */
+      // $('.top-content').backstretch("assets/img/backgrounds/1.jpg");
+      // $('.call-to-action-container').backstretch("assets/img/backgrounds/1.jpg");
+      // $('.testimonials-container').backstretch("assets/img/backgrounds/1.jpg");
+
+      $('#top-navbar-1').on('shown.bs.collapse', function () {
+        $('.top-content').backstretch("resize");
+      });
+      $('#top-navbar-1').on('hidden.bs.collapse', function () {
+        $('.top-content').backstretch("resize");
+      });
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+        $('.testimonials-container').backstretch("resize");
+      });
+
+      /*
+          Wow
+      */
+      new WOW().init();
+
+    });
+
+
+    jQuery(window).load(function () {
+
+      /*
+        Hidden images
+      */
+      $(".testimonial-image img").attr("style", "width: auto !important; height: auto !important;");
+
+    });
+  </script>
+
+</body>
+
+</html>

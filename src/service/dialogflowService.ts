@@ -1,5 +1,5 @@
 import { IIntent } from '../interface/IIntent';
-import MessageBuilder from '../builder/MessageBuilder';
+import MessageBuilder from '../builder/messageBuilder';
 import dialogflow from 'dialogflow';
 import { extractInputIntentName, extractOutputContexts } from '../utils/StringUtils';
 
@@ -18,6 +18,7 @@ export default class DialogflowService {
     const request = {
       parent: this.intentsClient.projectAgentPath(this.projectId),
       intentView: 'INTENT_VIEW_FULL',
+      languageCode: 'th',
     };
 
     let intents: any;
