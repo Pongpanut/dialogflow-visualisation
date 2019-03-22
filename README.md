@@ -1,6 +1,6 @@
 # Dialogflow conversation visualisation
 
-This project enhance visualisation ability to your dialogflow project. It will shown you the relation of an intent that you designed for the converstion.
+This project enhance visualisation ability to your dialogflow project. It will shown you the relation of an intent that you designed for the converstion. This is a [Demo](https://light-ether-235104.appspot.com/). 
 
 ## Getting Started
 
@@ -106,5 +106,4 @@ or with coverage version
 ```
 npm run testWithCoverage
 ```
-There is an [Demo](https://light-ether-235104.appspot.com/) showing the visualisation 
 
