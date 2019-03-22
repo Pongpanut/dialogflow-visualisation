@@ -66,9 +66,11 @@ describe('MessageBuilder', () => {
         noOfVertices: 2
       });
       const intentStr = `{id: 0 , label: "intent1",
-          font: {color: \'#FF0000\'},
+          group: 'both',
+          font: {size: 21,color: '#FF0000'},
           title: "Number of Payload is 1"},{id: 1 , label: "intent2",
-          font: {color: \'#000000\'},
+          group: 'normal',
+          font: {size: 21,color: '#000000'},
           title: "Training phrases are OK </br>Response Message is response </br>Number of Payload is 1"},`;
       const idvIntentStr = '';
       expect(response.intentStr).toEqual(intentStr);
@@ -85,7 +87,8 @@ describe('MessageBuilder', () => {
         noOfVertices: 2
       });
       const intentStr = `{id: 1 , label: "intent1",
-          font: {color: \'#FF0000\'},
+          group: 'both',
+          font: {size: 21,color: '#FF0000'},
           title: "Number of Payload is 1"},`;
 
       expect(response.intentStr).toEqual(intentStr);
@@ -101,10 +104,12 @@ describe('MessageBuilder', () => {
         noOfVertices: 2
       });
       const intentStr = `{id: 0 , label: "intent1",
-          font: {color: \'#FF0000\'},
+          group: 'both',
+          font: {size: 21,color: '#FF0000'},
           title: "Number of Payload is 1"},`;
       const idvIntentStr = `{id: 1 , label:" intent2",
-          font: {color: '#000000'},
+          group: 'normal',
+          font: {size: 21,color: '#000000'},
           title: "Training phrases are OK </br>Response Message is response </br>Number of Payload is 1"},`;
       expect(response.intentStr).toEqual(intentStr);
       expect(response.idvIntentStr).toEqual(idvIntentStr);
