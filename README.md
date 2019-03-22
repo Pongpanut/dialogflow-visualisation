@@ -4,7 +4,7 @@ This project enhance visualisation ability to your dialogflow project. It will s
 
 ## Getting Started
 
-Dialogflow platform provide service to create chatbot with a few click. You can build a conversation logic by create an intent, set a training phase and set a reponse to what ever you want then the bot will reply what you want. but to make a conversation in real life it not only question and answer. You need to consider the context of converstion aswell To make conversation more smooth you have to create conversation flow by define input/output context but let imagine if you have a hundread of intent with fully relationship It will be exhausted task 
+Dialogflow platform provide service to create chatbot in a few click. You can build a conversation logic by create an intent, define a training phase and define a reponse to what ever you want the bot to reply. but the conversation in real life it not only question and answer. We need to consider the context of converstion aswell. To make conversation more smooth you have to create conversation flow by define input/output context but let imagine if you have a hundread of intent with fully relationship It will be exhausted task to understand how the conversation flow is
 
 ### Prerequisites
 
