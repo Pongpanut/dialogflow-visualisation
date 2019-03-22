@@ -53,16 +53,14 @@ After open the browser. On the header you will see your project ID on the left a
 ![image](https://drive.google.com/uc?export=view&id=1ioMfULcn3Zx64tp-495HVdoTKxpI-6da)
 
 
-Intent sestion will show the graph about relation of an intents. it's directional graph
+Intent section will show the graph about relation of an intents. it's directional graph
 
 ![image](https://drive.google.com/uc?export=view&id=1QcUMuAGTxekRw6G5_iNPvr8s78lZwyW9)
 
 At the bottom, there is a control panel make you able to move left/right zoom in/out 
 
-  
-
 Once you hover the node it will show you below</br>
-   - Training pharse - This is your training phrase that you use. we limited number of the phrase to 3 pharses.</br>
+   - Training pharse - This is your training phrase. we limited number of the phrase to 3 pharses.</br>
    - Response Message - This is your <b style="color:red">Text</b> Response Message (not include text in payload)
    - Number of payload - This is you number of payload that you create on platform
 
@@ -71,7 +69,7 @@ Once you hover the node it will show you below</br>
 </p>
 
 Once you hover the edge it will show you below
-   - Context name - This is direct arrow. the edge will start from the parent intent to follow-up intent
+   - Context name - This is context name. the edge will start from the parent intent to follow-up intent
    - LifespanCount - This is a number of lifespan for this context
 
 <p align="center">
