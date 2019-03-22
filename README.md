@@ -1,5 +1,5 @@
-<p align="center" style="max-width: 100%;height: 200px;">
-       <img src="https://drive.google.com/uc?export=view&id=1lkVIEp2dLwvSaNr2xZUB7iV8rUGCMryA" style="max-width:100%;height: 100px;" alt="Italian Trulli">
+<p align="center" style="max-width: 100%;height: 100px;">
+       ![Logo](https://drive.google.com/uc?export=view&id=1lkVIEp2dLwvSaNr2xZUB7iV8rUGCMryA)
 </p>
 
 # Conversation flow visualisation for Dialogflow 
