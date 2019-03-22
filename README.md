@@ -82,6 +82,9 @@ Next section is individual intent This section will show the intent in yourproje
 
 ![image](https://drive.google.com/uc?export=view&id=1DVhjWGGxR-RH8rYmIYf8AWJgjCMPzqLh)
 
+Last section is readme section. This will provide information about the symbol, color that we use in visualisation
+
+![image](https://drive.google.com/uc?export=view&id=1GYzrwzz1m7pTNyhVcbOAeBU4UNpkDX3R)
 
 
 ## Running the tests
@@ -104,3 +107,4 @@ or with coverage version
 npm run testWithCoverage
 ```
 There is an [Demo](https://light-ether-235104.appspot.com/) showing the visualisation 
+
