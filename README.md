@@ -1,4 +1,4 @@
-# Dialogflow conversation visualisation
+# Dialogflow conversation flow visualisation
 
 This project enhance visualisation ability to your dialogflow project. It will shown you the relation of an intent that you designed for the converstion. This is a [Demo](https://light-ether-235104.appspot.com/). 
 
