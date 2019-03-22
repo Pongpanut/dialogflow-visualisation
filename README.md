@@ -40,15 +40,15 @@ npm run build && npm run start
   <img width="460"  src="https://drive.google.com/uc?export=view&id=1TM0Y6ATHB8ZUD_fuFaW2v6b70NdJoaIL">
 </p>
 
-Open your browser and enjoy with 8080 port
+Open your browser with 8080 port
 ```
 http://localhost:8080/
 ```
 
 After open the browser. On the header you will see your project ID on the left and main menu on the right.
-   - Intent - This section shows the intent which have a relation (inputcontext and outputcontext) with other
-   - Individual intent - This section will show stand alone intent (no relation with others)
-   - Read me This section will show the information about icon or meaning of the edge color
+   - Intent - This section shows intents which have a relation (inputcontext and outputcontext) with other
+   - Individual intent - This section shows stand alone intents (no relation with others)
+   - Read me This section shows the information about icon or meaning of the edge color
    
 ![image](https://drive.google.com/uc?export=view&id=1ioMfULcn3Zx64tp-495HVdoTKxpI-6da)
 
