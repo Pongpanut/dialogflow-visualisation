@@ -33,14 +33,14 @@ In /src/config folder replace 'proj-id' with your project id
 Start visulisation server
 
 ```
-npm run start
+npm run build && npm run start
 ```
 
 <p align="center">
   <img width="460"  src="https://drive.google.com/uc?export=view&id=1TM0Y6ATHB8ZUD_fuFaW2v6b70NdJoaIL">
 </p>
 
-Open your browser and enjoy with this path 
+Open your browser and enjoy with 8080 port
 ```
 http://localhost:8080/
 ```
