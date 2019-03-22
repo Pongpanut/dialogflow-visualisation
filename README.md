@@ -1,5 +1,5 @@
 <p align="center" style="max-width: 100%;height: 100px;">
-       ![Logo](https://drive.google.com/uc?export=view&id=1lkVIEp2dLwvSaNr2xZUB7iV8rUGCMryA)
+     <img height="150" src="https://drive.google.com/uc?export=view&id=1lkVIEp2dLwvSaNr2xZUB7iV8rUGCMryA">
 </p>
 
 # Conversation flow visualisation for Dialogflow 
