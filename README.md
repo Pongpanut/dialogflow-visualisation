@@ -105,4 +105,4 @@ or with coverage version
 ```
 npm run testWithCoverage
 ```
-
+There is an [Demo](https://light-ether-235104.appspot.com/) showing the visualisation 
