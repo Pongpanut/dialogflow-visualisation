@@ -55,11 +55,9 @@ After open the browser. On the header you will see your project ID on the left a
 
 Intent sestion will show the graph about relation of an intents. it's directional graph
 
-![image](https://drive.google.com/uc?export=view&id=1hbslUu9PwEBxIt60jsIBeTWpLaZ8kAgt)
+![image](https://drive.google.com/uc?export=view&id=1QcUMuAGTxekRw6G5_iNPvr8s78lZwyW9)
 
-There is a control panel at the bottom of each section you can move left/right zoom in/out 
-
-![image](https://drive.google.com/uc?export=view&id=12UoHiQE1Ru-wLla4l5ugBEfu3kgEvgQ9)
+At the bottom, there is a control panel make you able to move left/right zoom in/out 
 
   
 
@@ -69,7 +67,7 @@ Once you hover the node it will show you below</br>
    - Number of payload - This is you number of payload that you create on platform
 
 <p align="center">
-  <img width="460"  src="https://drive.google.com/uc?export=view&id=1ErCTo_-29q-TwnJ36Agvujc8PExen0MC">
+  <img width="460"  src="https://drive.google.com/uc?export=view&id=1A0H8JkE-E34nBvsDMbkaAs5tbO4pK5oQ">
 </p>
 
 Once you hover the edge it will show you below
@@ -82,7 +80,7 @@ Once you hover the edge it will show you below
 
 Next section is individual intent This section will show the intent in yourproject which has/have no relation with other intents
 
-![image](https://drive.google.com/uc?export=view&id=1y0G-TD0_-0wV9kc0M7z7gLCCfThBFgDc)
+![image](https://drive.google.com/uc?export=view&id=1DVhjWGGxR-RH8rYmIYf8AWJgjCMPzqLh)
 
 
 
