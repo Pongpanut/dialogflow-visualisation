@@ -8,7 +8,7 @@ Dialogflow platform provide service to create chatbot in a few click. You can bu
 
 ### Prerequisites
 
-In google cloud platform you need to create service accounts for your project. download a key and setting your environment variable with name 'GOOGLE_APPLICATION_CREDENTIALS'
+ICreate service accounts in google cloud platform for your project. download a key and setting your environment variable with name 'GOOGLE_APPLICATION_CREDENTIALS' on your local machine
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS='your-key-file.json'
