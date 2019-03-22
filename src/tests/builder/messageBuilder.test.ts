@@ -46,10 +46,10 @@ describe('MessageBuilder', () => {
         intentIndex
       });
       const expected = `{from:'1'
-             ,color:{color:' #69b3a2'},
-             to: 0,title: 'output1 </br><p style ="color:red">lifespanCount: <b> 3 </b></p>'},{from:'2'
-             ,color:{color:' #69b3a2'},
-             to: 1,title: 'output2 </br><p style ="color:red">lifespanCount: <b> 4 </b></p>'},`;
+              ,color:{color:' #69b3a2'},
+              to: 0,title: 'output1 </br><p style ="color:red">lifespanCount: <b> 3 </b></p>'},{from:'2'
+              ,color:{color:' #69b3a2'},
+              to: 1,title: 'output2 </br><p style ="color:red">lifespanCount: <b> 4 </b></p>'},`;
 
       expect(result).toEqual(expected);
     });

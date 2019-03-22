@@ -201,6 +201,10 @@
       transition: all .3s;
     }
 
+    .vis-container {
+      box-shadow: 0px 1px 5px #b7b7b7;
+    }
+
     .btn-link-3:hover,
     .btn-link-3:focus,
     .btn-link-3:active,
@@ -235,9 +239,10 @@
     }
 
     .navbar.navbar-no-bg {
-      background: #444;
-      background: rgba(0, 0, 0, 0.2);
+      background: white;
+      box-shadow: 0px 1px 5px #f1f1f1;
     }
+
 
     .navbar-dark .navbar-nav {
       font-size: 15px;
@@ -534,7 +539,10 @@
     @media (max-width: 767px) {
 
       .navbar.navbar-no-bg {
-        background: #444;
+
+        background: white;
+        box-shadow: 0px 1px 5px #f1f1f1;
+        /* border-bottom: 1px solid; */
       }
       .navbar-dark .navbar-toggler {
         border-color: #444;
@@ -865,13 +873,6 @@
 
       var timeline = new vis.Network(container, data, options);
       var timeline2 = new vis.Network(container2, data2, options2);
-
-      // var height = Math.round(window.innerHeight * 0.85) + 'px';     // The DOM way
-      // //var height = Math.round($(window).height() * 0.80) + 'px';    // The jQuery way
-
-      // // Now, resize the container (and not the canvas)
-      // document.getElementById('mynetwork').style.height = height;
-      // document.getElementById('mynetwork2').style.height = height;
       timeline2.fit();
     }
   </script>
@@ -894,7 +895,8 @@
   <!-- Top menu -->
   <nav class="navbar navbar-dark fixed-top navbar-expand-md navbar-no-bg">
     <div class="container">
-      <a class="navbar-brand" href="index.html">
+      <a class="navbar-brand" style="color:#1a73e8" href="index.html">
+
         <%= projectId %>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
@@ -904,13 +906,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link scroll-link" href="#services">Intent</a>
+            <a class="nav-link scroll-link" style="color:#e65100" href="#services">Intent</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link scroll-link" href="#more-services">Individual intent</a>
+            <a class="nav-link scroll-link" style="color:#e65100" href="#more-services">Individual intent</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link scroll-link" href="#about-us">Readme</a>
+            <a class="nav-link scroll-link" style="color:#e65100" href="#about-us">Readme</a>
           </li>
         </ul>
       </div>
@@ -919,33 +921,33 @@
 
 
   <!-- intent -->
-  <div class="services-container section-container" style="background-color:#f1f1f1">
+  <div class="services-container section-container" style="background-color:white">
     <div class="container" style="background-color:white">
       <div class="row">
         <div class="col services section-description wow fadeIn">
           <h2>Intent</h2>
-          <div class="divider-1 wow fadeInUp"><span></span></div>
+          <div class="fadeInUp"><span></span></div>
         </div>
       </div>
       <div class="row">
-        <div id="mynetwork" class="tab-container message"></div>
+        <div id="mynetwork" class="tab-container vis-container message"></div>
       </div>
     </div>
   </div>
 
   <!-- Individual -->
-  <div class="more-services-container section-container" style="background-color:#f1f1f1">
+  <div class="more-services-container section-container" style="background-color:white">
     <div class="container" style="background-color:white">
 
       <div class="row">
         <div class="col more-services section-description wow fadeIn">
           <h2>Individual intent</h2>
-          <div class="divider-1 wow fadeInUp"><span></span></div>
+          <div class="fadeInUp"><span></span></div>
         </div>
       </div>
 
       <div class="row">
-        <div id="mynetwork2" class="tab-container message"></div>
+        <div id="mynetwork2" class="tab-container vis-container message"></div>
       </div>
 
 
@@ -953,8 +955,8 @@
   </div>
 
   <!-- About us -->
-  <div class="about-us-container section-container section-container-gray-bg" style="background-color:#f1f1f1">
-    <div class="container" style="background-color:white">
+  <div class="about-us-container section-container section-container-gray-bg" style="background-color:white">
+    <div class="container vis-container" style="background-color:white">
       <div class="row">
         <div class="col more-services section-description wow fadeIn">
           <h2>Read me !!!</h2>

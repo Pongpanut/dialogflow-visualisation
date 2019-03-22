@@ -6,30 +6,103 @@ export default class MessageBuilder {
   MAGIC_NUMBER = 3;
 
   getEdgeContent = ({ intentOutputContexts, intents, intentIndex }): string => {
+    console.log(intentOutputContexts)
     let edgeString: string = '';
     intentOutputContexts.forEach((context) => {
-      edgeString += context.outputContexts.map((outputContext) => {
-        outputContext.index = context.index;
-        outputContext.intents = intents;
-        outputContext.intentIndex = intentIndex;
-        return outputContext;
-      }).reduce(this.getEdgeString, '');
+      context.outputContexts.forEach((outputContext, index) => {
+        const outputIndex = index;
+        const outputIntent = intents.filter(x => x.inputContextNames.includes(outputContext.name));
+        console.log(outputIntent.length)
+        if (outputIntent) {
+          outputIntent.forEach((output) => {
+            edgeString += `{from:'${context.index}'
+              ,color:{color:\' ${Color[EdgeColor[outputIndex]]}\'},
+              to: ${intentIndex.get(output.intentName)},title: '${outputContext.name} </br><p style =\"color:red\">lifespanCount: <b> ${outputContext.lifespanCount} </b></p>'},`;
+          });
+        }
+
+      });
+      // console.log(context)
+      // edgeString += context.outputContexts.map((outputContext, index) => {
+      //   outputContext.num = index
+      //   outputContext.index = context.index;
+      //   outputContext.intents = intents;
+      //   outputContext.intentIndex = intentIndex;
+      //   return outputContext;
+
+      // }).reduce(this.getEdgeString, '');
+      // console.log("%%%%%%")
+      // console.log(edgeString)
     });
+    // console.log("%%%%%%")
+    console.log(edgeString)
+    // console.log("%%%%%%")
     return edgeString;
   }
 
-  private getEdgeString = (sum, input): string => {
-    const edgeString = input.intents
-      .filter(x => x.inputContextNames.includes(input.name))
-      .reduce((acc, curr, index) => {
-        acc += `{from:'${input.index}'
-             ,color:{color:\' ${Color[EdgeColor[index]]}\'},
-             to: ${input.intentIndex.get(curr.intentName)},title: '${input.name} </br><p style =\"color:red\">lifespanCount: <b> ${input.lifespanCount} </b></p>'},`;
-        return acc;
-      }, '');
 
-    return edgeString;
-  }
+
+  // private getEdgeString = (sum, input): string => {
+
+  //   // let test = '';
+  //   let test = ''
+  //   test += input.intents
+  //     .filter(x => x.inputContextNames.includes(input.name))
+  //     .reduce((acc, curr) => {
+  //       console.log(input.index)
+  //       console.log(input.intentIndex.get(curr.intentName))
+  //       console.log(curr.intentName)
+  //       console.log(input.name)
+
+  //       return acc += `{from:'${input.index}'
+  //                ,color:{color:\' ${Color[EdgeColor[input.num]]}\'},
+  //                to: ${input.intentIndex.get(curr.intentName)},title: '${input.name} </br><p style =\"color:red\">lifespanCount: <b> ${input.lifespanCount} </b></p>'},`;
+
+
+  //       // return acc;
+  //     }, '');
+  //   console.log(test)
+  //   console.log("######")
+  //   return test;
+  // }
+
+
+
+  // getEdgeString = (sum, input): string => {
+  //   let edgeString = '';
+
+  //   const outputIntent = input.intents.filter(x => x.inputContextNames[0] === input.name);
+  //   if (outputIntent) {
+  //     outputIntent.forEach((output, index) => {
+  //       edgeString += `{from:'${input.index}'
+  //       ,color:{color:\' ${Color[EdgeColor[index]]}\'},
+  //       to: ${input.intentIndex.get(output.intentName)},title: '${input.name} </br><p style =\"color:red\">lifespanCount: <b> ${input.lifespanCount} </b></p>'},`;
+  //     });
+  //   }
+
+  //   return edgeString
+  // }
+
+  // getEdgeContent = ({ intentOutputContexts, intents, intentIndex }): string => {
+  //   console.log(intentOutputContexts.length)
+  //   let edgeString = '';
+  //   intentOutputContexts.forEach((dataObj) => {
+  //     dataObj.outputContext.forEach((outputContext) => {
+  //       const outputIntent = intents.filter(x => x.inputContextNames[0] === outputContext.name);
+  //       if (outputIntent) {
+  //         outputIntent.forEach((output, index) => {
+  //           edgeString += `{from:'${dataObj.index}'
+  //           ,color:{color:\' ${Color[EdgeColor[index]]}\'},
+  //           to: ${intentIndex.get(output.displayName)},title: '${outputContext.name} </br><p style =\"color:red\">lifespanCount: <b> ${outputContext.lifespanCount} </b></p>'},`;
+  //         });
+  //       }
+  //     });
+  //   });
+
+  //   return edgeString;
+  // }
+
+
 
   getVerticesContent = ({ intentIndex, intents, noOfVertices }) => {
     let intentStr: string = '';
@@ -89,16 +162,16 @@ export default class MessageBuilder {
     let color;
     let icon;
     if (state === 'ENABLED' && isFallback) {
-      color = Color.RED;
+      color = Color.TEXT_BOTH;
       icon = 'both'
     } else if (state === 'ENABLED') {
-      color = Color.GREEN;
+      color = Color.TEXT_ENABLE;
       icon = 'enable'
     } else if (isFallback) {
-      color = Color.BLUE;
+      color = Color.TEXT_FALLBACK;
       icon = 'falback'
     } else {
-      color = Color.BLACK;
+      color = Color.TEXT_NORMAL;
       icon = 'normal'
     }
     return {
