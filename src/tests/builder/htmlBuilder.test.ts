@@ -22,7 +22,8 @@ describe('HtmlBuilder', () => {
       const dialogflowService: DialogflowService = new DialogflowService({
         messageBuilder,
         intentsClient,
-        projectId: 'projID'
+        projectId: 'projID',
+        languageCode: 'th'
       });
 
       htmlBuilder = new HtmlBuilder({ messageBuilder, dialogflowService });
