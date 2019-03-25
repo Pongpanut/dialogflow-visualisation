@@ -26,11 +26,12 @@ Install all dependency
 npm install
 ```
 
-In /src/config folder replace 'proj-id' with your project id
+In /src/config folder replace 'proj-id' and 'code' with your project id and language code repectively
 
 ```
 {
     "projectId": "proj-id"
+    "languageCode": "code"
 }
 ```
 
