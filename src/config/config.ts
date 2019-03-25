@@ -1,4 +1,4 @@
-export interface Config
-{
+export interface Config {
   projectId: string;
+  languageCode: string;
 }

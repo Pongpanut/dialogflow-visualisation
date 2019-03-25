@@ -14,17 +14,6 @@ export default class HtmlBuilder {
   async composeHtml(projectId, res) {
     const intents = await this.dialogflowService.getIntents();
     const response = this.buildHtmlContext(intents);
-    res.render('index', {
-      projectId,
-      nodes: JSON.stringify(response.intentStr),
-      nodes2: JSON.stringify(response.idvIntentStr),
-      edge: JSON.stringify(response.edgeStr)
-    });
-  }
-
-  async composeHtml2(projectId, res) {
-    const intents = await this.dialogflowService.getIntents();
-    const response = this.buildHtmlContext(intents);
     res.render('index2', {
       projectId,
       nodes: JSON.stringify(response.intentStr),

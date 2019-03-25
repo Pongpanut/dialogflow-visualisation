@@ -34,7 +34,8 @@ describe('dialogflowService', () => {
       service = new DialogflowService({
         intentsClient,
         messageBuilder,
-        projectId: 'test'
+        projectId: 'test',
+        languageCode: 'th'
       });
 
       const result = await service.getIntents();
@@ -76,6 +77,7 @@ describe('dialogflowService', () => {
         intentsClient,
         messageBuilder,
         projectId: 'test',
+        languageCode: 'th'
       });
       console.log = jest.fn();
       const result = await service.getIntents();

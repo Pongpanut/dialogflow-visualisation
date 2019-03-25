@@ -15,7 +15,8 @@ const messageBuilder = new MessageBuilder();
 const service = new DialogflowService({
   messageBuilder,
   intentsClient: client,
-  projectId: config.projectId
+  projectId: config.projectId,
+  languageCode: config.languageCode
 });
 
 const builder = new HtmlBuilder({
@@ -24,10 +25,6 @@ const builder = new HtmlBuilder({
 });
 
 app.get('/', async (_, res) => await builder.composeHtml(config.projectId, res));
-app.get('/2', async (_, res) => await builder.composeHtml2(config.projectId, res));
-app.get('/test', (req, res) => {
-  res.send('Hello World!');
-});
 
 const server = app.listen(8080, () => {
   const host = server.address().address;

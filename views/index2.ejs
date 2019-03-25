@@ -895,9 +895,9 @@
   <!-- Top menu -->
   <nav class="navbar navbar-dark fixed-top navbar-expand-md navbar-no-bg">
     <div class="container">
-      <a class="navbar-brand" style="color:#1a73e8" href="index.html">
-
-        <%= projectId %>
+      <a class="navbar-brand" style="color:#1a73e8; text-align:left;" href="index.html">
+          <img src="https://drive.google.com/uc?export=view&id=1lkVIEp2dLwvSaNr2xZUB7iV8rUGCMryA" style="max-width: 100%;height: 50px;" alt="Italian Trulli">
+          <p style="display:inline-block; margin-left:10px"> <%= projectId %> </p>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -930,7 +930,7 @@
         </div>
       </div>
       <div class="row">
-        <div id="mynetwork" class="tab-container vis-container message"></div>
+        <div id="mynetwork" class="tab-container vis-container message" style="width:100%"></div>
       </div>
     </div>
   </div>
@@ -947,7 +947,7 @@
       </div>
 
       <div class="row">
-        <div id="mynetwork2" class="tab-container vis-container message"></div>
+        <div id="mynetwork2" class="tab-container vis-container message" style="width:100%"></div>
       </div>
 
 
@@ -967,8 +967,8 @@
         <div class="column" style="background-color:#fff;">
           <div id="message">
             <h5>Node</h5>
-            <ul class="fa-ul">
-              <h6>Each Node Icon and text color represent information below</h6>
+            <p style="font-size:13px">Each Node Icon and text color represent information below</p>
+            <ul class="fa-ul" style="padding-left:60px">
               <li style="color:#f76949; text-align: left;"><i class="fa-li fa fa-star-half-o"></i>Webhook enable and Fallback intent</li>
               <li style="color:#f0ad4e; text-align: left;"><i class="fa-li fa fa-bolt"></i>Only webhook enable</li>
               <li style="color:#5fc9af; text-align: left;"><i class="fa-li fa fa-bookmark-o"></i>Only Fallback intent</li>
@@ -979,12 +979,12 @@
         <div class="column" style="background-color:#fff;">
           <div id="message">
             <h5>Edge</h5>
-            <ul class="fa-ul ">
-              <h6>Each edge color represent information below</h6>
-              <li style="text-align: left;"><i class="fa-li fa fa-arrow-right " style="color:#69b3a2; "></i>1st output context</li>
-              <li style="text-align: left;"><i class="fa-li fa fa-arrow-right " style="color:#0000ff; "></i>2nd output context</li>
-              <li style="text-align: left;"><i class="fa-li fa fa-arrow-right " style="color:#c62dcd; "></i>3rd output context</li>
-              <li style="text-align: left;"><i class="fa-li fa fa-arrow-right " style="color:#0cf0e9; "></i>4th output context</li>
+            <p style="font-size:13px">Each edge color represent information below</p>
+            <ul class="fa-ul" style="padding-left:60px">
+              <li style="text-align: left;" style="color:#757575; "><i class="fa-li fa fa-arrow-right " style="color:#757575; "></i>1st output context</li>
+              <li style="text-align: left;" style="color:#c4c4c4; "><i class="fa-li fa fa-arrow-right " style="color:#c4c4c4; "></i>2nd output context</li>
+              <li style="text-align: left;" style="color:#e0e0e0; "><i class="fa-li fa fa-arrow-right " style="color:#e0e0e0; "></i>3rd output context</li>
+              <li style="text-align: left;" style="color:#e9e9e9; "><i class="fa-li fa fa-arrow-right " style="color:#e9e9e9; "></i>4th output context</li>
             </ul>
           </div>
         </div>

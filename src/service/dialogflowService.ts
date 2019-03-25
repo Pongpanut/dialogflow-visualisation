@@ -7,18 +7,20 @@ export default class DialogflowService {
   private messageBuilder: MessageBuilder;
   private intentsClient: dialogflow;
   private projectId: string;
+  private languageCode: string;
 
-  constructor({ messageBuilder, intentsClient, projectId }) {
+  constructor({ messageBuilder, intentsClient, projectId, languageCode }) {
     this.messageBuilder = messageBuilder;
     this.intentsClient = intentsClient;
     this.projectId = projectId;
+    this.languageCode = languageCode;
   }
 
   async getIntents(): Promise<any> {
     const request = {
       parent: this.intentsClient.projectAgentPath(this.projectId),
       intentView: 'INTENT_VIEW_FULL',
-      languageCode: 'th',
+      languageCode: this.languageCode,
     };
 
     let intents: any;

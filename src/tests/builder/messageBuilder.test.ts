@@ -1,11 +1,6 @@
-// import { Color } from '../../enum/color';
 import { IOutputContext } from '../../interface/IOutputContext';
 import { IIntent } from '../../interface/IIntent';
 import MessageBuilder from '../../builder/MessageBuilder';
-
-const rewire = require('rewire');
-const messageRewire = rewire('../../../dist/builder/messageBuilder');
-// const getVerticeColor = messageRewire.__get__('getVerticeColor');
 
 describe('MessageBuilder', () => {
   let intentIndex = new Map<string, number>();
@@ -20,23 +15,7 @@ describe('MessageBuilder', () => {
     intentIndex.set('intent1', 0);
     intentIndex.set('intent2', 1);
     messageBuilder = new MessageBuilder();
-    console.log(JSON.stringify(messageRewire));
   });
-
-  // describe('getVerticeColor', () => {
-  //   it('return Color.RED if state is ENABLED and isFallback is true', () => {
-  //     expect(getVerticeColor('TEST_ENABLED', true)).toEqual(Color.RED);
-  //   });
-  //   it('return Color.GREEN if state is ENABLED and isFallback is false', () => {
-  //     expect(getVerticeColor('TEST_ENABLED', false)).toEqual(Color.GREEN);
-  //   });
-  //   it('return Color.BLUE if state is UNSPECIFIED and isFallback is true', () => {
-  //     expect(getVerticeColor('TEST_UNSPECIFIED', true)).toEqual(Color.BLUE);
-  //   });
-  //   it('return Color.BLACK if state is UNSPECIFIED and isFallback is false', () => {
-  //     expect(getVerticeColor('TEST_UNSPECIFIED', false)).toEqual(Color.BLACK);
-  //   });
-  // });
 
   describe('getEdgeContent', () => {
     test('should return edge content properly', () => {
@@ -46,9 +25,9 @@ describe('MessageBuilder', () => {
         intentIndex
       });
       const expected = `{from:'1'
-              ,color:{color:' #69b3a2'},
+              ,color:{color:' #757575'},
               to: 0,title: 'output1 </br><p style ="color:red">lifespanCount: <b> 3 </b></p>'},{from:'2'
-              ,color:{color:' #69b3a2'},
+              ,color:{color:' #757575'},
               to: 1,title: 'output2 </br><p style ="color:red">lifespanCount: <b> 4 </b></p>'},`;
 
       expect(result).toEqual(expected);
@@ -67,10 +46,10 @@ describe('MessageBuilder', () => {
       });
       const intentStr = `{id: 0 , label: "intent1",
           group: 'both',
-          font: {size: 21,color: '#FF0000'},
+          font: {size: 21,color: '#f76949'},
           title: "Number of Payload is 1"},{id: 1 , label: "intent2",
           group: 'normal',
-          font: {size: 21,color: '#000000'},
+          font: {size: 21,color: '#66afe9'},
           title: "Training phrases are OK </br>Response Message is response </br>Number of Payload is 1"},`;
       const idvIntentStr = '';
       expect(response.intentStr).toEqual(intentStr);
@@ -88,7 +67,7 @@ describe('MessageBuilder', () => {
       });
       const intentStr = `{id: 1 , label: "intent1",
           group: 'both',
-          font: {size: 21,color: '#FF0000'},
+          font: {size: 21,color: '#f76949'},
           title: "Number of Payload is 1"},`;
 
       expect(response.intentStr).toEqual(intentStr);
@@ -105,11 +84,11 @@ describe('MessageBuilder', () => {
       });
       const intentStr = `{id: 0 , label: "intent1",
           group: 'both',
-          font: {size: 21,color: '#FF0000'},
+          font: {size: 21,color: '#f76949'},
           title: "Number of Payload is 1"},`;
       const idvIntentStr = `{id: 1 , label:" intent2",
           group: 'normal',
-          font: {size: 21,color: '#000000'},
+          font: {size: 21,color: '#66afe9'},
           title: "Training phrases are OK </br>Response Message is response </br>Number of Payload is 1"},`;
       expect(response.intentStr).toEqual(intentStr);
       expect(response.idvIntentStr).toEqual(idvIntentStr);
